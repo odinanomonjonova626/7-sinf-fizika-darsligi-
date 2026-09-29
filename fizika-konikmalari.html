@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fizika: o'rganish ko'nikmalari (7-sinf)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F7FF;--grid:#D9E7FB;--ink:#14213D;--soft:#465272;--card:#FFFFFF;--edge:#14213D;--shadow:#14213D;
+  --stage:#F8FBFF;--note:#E6F0FF;--sun:#FFC93C;--on-sun:#14213D;--sun-bg:#FFF3C4;
+  --ok:#17703F;--ok-bg:#D9F4E3;--bad:#B3202F;--bad-bg:#FDE1E4;--on-c:#FFFFFF;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1630;--grid:#1A2650;--ink:#EDF2FF;--soft:#B5C0E0;--card:#172248;--edge:#8DA2E0;--shadow:#050A1C;
+    --stage:#0B1228;--note:#1F2C5A;--sun-bg:#3B3210;--ok:#6EE0A0;--ok-bg:#12382A;--bad:#FF8C99;--bad-bg:#421A22;--on-c:#0E1630;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1630;--grid:#1A2650;--ink:#EDF2FF;--soft:#B5C0E0;--card:#172248;--edge:#8DA2E0;--shadow:#050A1C;
+  --stage:#0B1228;--note:#1F2C5A;--sun-bg:#3B3210;--ok:#6EE0A0;--ok-bg:#12382A;--bad:#FF8C99;--bad-bg:#421A22;--on-c:#0E1630;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{font-size:18px;-webkit-text-size-adjust:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 74px)}
+body{margin:0;background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;color:var(--ink);font-family:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-weight:600;line-height:1.55}
+h1,h2,h3,h4{font-family:'Baloo 2','Nunito',system-ui,sans-serif;line-height:1.15;margin:0}
+p{margin:.4em 0}
+.lesson,.tab{--c:var(--cl)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .lesson,:root:not([data-theme="light"]) .tab{--c:var(--cd)}}
+:root[data-theme="dark"] .lesson,:root[data-theme="dark"] .tab{--c:var(--cd)}
+.wrap{max-width:900px;margin:0 auto;padding:0 14px 40px}
+
+/* hero */
+.hero{position:relative;padding:22px 0 12px}
+.hero h1{font-size:clamp(1.65rem,6vw,2.6rem);font-weight:800;padding-right:92px;max-width:18em}
+.hero-pend{position:absolute;right:0;top:14px;width:84px;height:auto}
+.hp{transform-origin:60px 8px;animation:sw 2s ease-in-out infinite alternate}
+@keyframes sw{from{transform:rotate(-24deg)}to{transform:rotate(24deg)}}
+@media (prefers-reduced-motion:reduce){.hp{animation:none}}
+.goal{font-size:1.05rem;max-width:36em;margin-top:10px}
+.prog{display:flex;align-items:center;gap:10px;margin-top:12px;font-weight:800;flex-wrap:wrap}
+.pbar{display:flex;gap:5px}
+.pbar i{width:26px;height:12px;border:2.5px solid var(--edge);border-radius:6px;background:var(--card)}
+.pbar i.on{background:var(--sun)}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:8px;overflow-x:auto;padding:10px 4px;
+  background:var(--paper);border-bottom:3px solid var(--edge);scrollbar-width:thin}
+.tab{flex:0 0 auto;display:flex;align-items:center;gap:6px;min-height:46px;padding:5px 14px 5px 6px;border:2.5px solid var(--edge);
+  border-radius:999px;background:var(--card);color:var(--ink);font:800 .9rem 'Nunito',sans-serif;cursor:pointer}
+.tab .tn{width:30px;height:30px;border-radius:50%;background:var(--c);color:var(--on-c);display:grid;place-items:center;font-size:.85rem}
+.tab[aria-current="true"]{background:var(--c);color:var(--on-c);box-shadow:3px 3px 0 var(--shadow)}
+.tab[aria-current="true"] .tn{background:var(--on-c);color:var(--c)}
+.tab.done::after{content:"✓";font-weight:800}
+
+/* lesson */
+.lesson{scroll-margin-top:74px}
+.lhead{display:flex;gap:12px;align-items:center;margin:22px 0 4px}
+.num{flex:0 0 auto;width:54px;height:54px;border-radius:14px;background:var(--c);color:var(--on-c);display:grid;place-items:center;
+  font:800 1.8rem 'Baloo 2',sans-serif;border:3px solid var(--edge);transform:rotate(-4deg)}
+.lhead h2{font-size:1.55rem;font-weight:800}
+.sub{font-size:.9rem;color:var(--soft);margin:2px 0 0}
+.card{background:var(--card);border:3px solid var(--edge);border-radius:20px;box-shadow:5px 5px 0 var(--shadow);padding:16px;margin:16px 0}
+.card>h3{font-size:1.3rem;margin-bottom:8px;color:var(--c)}
+.card h4{font-size:1.05rem;margin:14px 0 6px}
+.life{border-style:dashed}
+.remember{background:var(--sun-bg);border:3px solid var(--edge);border-radius:20px;padding:14px 18px;margin:16px 0;color:var(--ink)}
+.remember h3{font-size:1.25rem;margin-bottom:4px}
+.remember ul{margin:6px 0 0;padding-left:1.2em}
+.remember li{margin:4px 0}
+.pager{display:flex;justify-content:space-between;gap:10px;margin:18px 0 6px;flex-wrap:wrap}
+
+/* controls */
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.btn{min-height:50px;padding:8px 18px;border:3px solid var(--edge);border-radius:999px;background:var(--sun);color:var(--on-sun);
+  font:800 1rem 'Nunito',sans-serif;cursor:pointer;box-shadow:3px 3px 0 var(--shadow);transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.btn.alt{background:var(--c);color:var(--on-c)}
+.btn.ghost{background:var(--card);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.chip{min-height:44px;padding:6px 14px;border:2.5px solid var(--edge);border-radius:12px;background:var(--card);color:var(--ink);
+  font:800 .95rem 'Nunito',sans-serif;cursor:pointer}
+.chip.on,.chip[aria-pressed="true"]{background:var(--c);color:var(--on-c)}
+.chip.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ink)}
+.chip.no{background:var(--bad-bg);border-color:var(--bad);color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--c);outline-offset:3px}
+input[type=text],input[type=number],select,textarea{min-height:46px;padding:8px 12px;border:2.5px solid var(--edge);border-radius:12px;
+  background:var(--card);color:var(--ink);font:700 1rem 'Nunito',sans-serif;max-width:100%}
+textarea{width:100%;min-height:110px}
+input[type=range]{width:100%;accent-color:var(--c);height:34px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.row input[type=text]{flex:1 1 180px}
+.lbl{font-weight:800;margin:12px 0 4px}
+.stage{border:3px solid var(--edge);border-radius:16px;background:var(--stage);overflow:hidden}
+.stage svg,.stage canvas{display:block;width:100%;height:auto}
+.say{margin:10px 0;padding:10px 14px;background:var(--note);border-left:6px solid var(--c);border-radius:8px}
+.read{font:800 1.3rem 'Baloo 2',sans-serif}
+.scroll{overflow-x:auto}
+.two{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start}
+.two>*{flex:1 1 250px;min-width:0}
+table.dt{width:100%;border-collapse:collapse;font-size:.95rem}
+.dt th,.dt td{border:2px solid var(--edge);padding:6px 8px;text-align:center}
+.dt th{background:var(--sun);color:var(--on-sun)}
+.msg{margin:8px 0;padding:8px 12px;border-radius:10px;background:var(--note)}
+.msg.good{background:var(--ok-bg);color:var(--ok)}
+.msg.bad{background:var(--bad-bg);color:var(--bad)}
+
+/* quiz */
+.opt{display:block;width:100%;text-align:left;margin:8px 0;min-height:48px;padding:10px 14px;border:2.5px solid var(--edge);border-radius:14px;
+  background:var(--card);color:var(--ink);font:700 1rem 'Nunito',sans-serif;cursor:pointer}
+.opt input{width:20px;height:20px;margin:0 8px 0 0;vertical-align:middle;accent-color:var(--c)}
+.opt.sel{background:var(--note);border-color:var(--c);box-shadow:inset 0 0 0 2px var(--c)}
+.opt.right{background:var(--ok-bg);border-color:var(--ok)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt:disabled{cursor:default;color:var(--ink);-webkit-text-fill-color:var(--ink);opacity:1}
+.qt{font-weight:800;margin-top:14px}
+.why{margin:6px 0 12px;padding:8px 12px;border-radius:12px;font-size:.95rem}
+.why.good{background:var(--ok-bg);color:var(--ok)}
+.why.bad{background:var(--bad-bg);color:var(--bad)}
+.qscore{font:800 1.1rem 'Baloo 2',sans-serif;margin-top:10px}
+.stm{border:2.5px solid var(--edge);border-radius:14px;padding:8px 12px;margin:10px 0;background:var(--card)}
+.stm p{margin:2px 0}
+
+/* svg text */
+.svgt{fill:var(--ink);font:700 14px 'Nunito',sans-serif}
+.ct{fill:var(--soft);font:700 12px 'Nunito',sans-serif}
+.ct.b{fill:var(--ink)}
+.gl{stroke:var(--grid);stroke-width:1}
+.ax{stroke:var(--edge);stroke-width:2}
+.chart{max-width:520px;margin:0 auto}
+.stepper{display:flex;gap:6px;list-style:none;padding:0;margin:0 0 12px;flex-wrap:wrap}
+.stepper li{flex:1 1 90px;text-align:center;padding:6px 4px;border:2.5px solid var(--edge);border-radius:10px;font-size:.85rem;font-weight:800;background:var(--card)}
+.stepper li.act{background:var(--c);color:var(--on-c)}
+.stepper li.dn{background:var(--ok-bg);color:var(--ok)}
+.vrow{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border:2.5px solid var(--edge);border-radius:12px;padding:8px 10px;margin:8px 0;background:var(--card)}
+.vrow.ok{background:var(--ok-bg);border-color:var(--ok)}
+.vrow.no{background:var(--bad-bg);border-color:var(--bad)}
+.vrow span.t{flex:1 1 180px}
+.locked{opacity:.4;pointer-events:none;filter:grayscale(.6)}
+.ring{display:block;margin:10px auto;width:150px;height:150px}
+footer{margin:26px 0 10px;text-align:center;color:var(--soft);font-size:.85rem}
+@media (max-width:480px){html{font-size:17px}.card{padding:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <svg class="hero-pend" viewBox="0 0 120 130" aria-hidden="true">
+      <line x1="20" y1="8" x2="100" y2="8" stroke="var(--edge)" stroke-width="6" stroke-linecap="round"/>
+      <g class="hp"><line x1="60" y1="8" x2="60" y2="96" stroke="var(--edge)" stroke-width="3"/><circle cx="60" cy="108" r="16" fill="#FFC93C" stroke="var(--edge)" stroke-width="3"/></g>
+    </svg>
+    <h1>Fizika fanini o'rganishda qanday ko'nikmalarga ega bo'lish kerak?</h1>
+    <p class="goal"><b>Dars maqsadi:</b> fizik olimlar kabi kuzatish, o'lchash, taxmin qilish va tajriba o'tkazishni o'z qo'ling bilan sinab ko'rasan. Har bir bandda o'zing bos, surib ko'r va tekshir!</p>
+    <div class="prog"><span>Bajarilgan bandlar:</span><b><span id="progN">0</span> / 7</b><div class="pbar" id="progBar" aria-hidden="true"></div></div>
+  </header>
+  <nav class="tabs" id="tabs" aria-label="Dars bandlari"></nav>
+  <main id="main"></main>
+  <footer>7-sinf fizika: o'rganish ko'nikmalari</footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+/* ---------- yordamchi funksiyalar ---------- */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function canvasSetup(cv,w,h){const d=Math.min(window.devicePixelRatio||1,2);cv.width=w*d;cv.height=h*d;const c=cv.getContext('2d');c.setTransform(d,0,0,d,0,0);return c}
+function loop(fn){let raf=0,last=0,run=false;
+  const tick=t=>{if(!run)return;const dt=Math.min(.05,(t-last)/1000);last=t;fn(dt);if(run)raf=requestAnimationFrame(tick)};
+  return{start(){if(run)return;run=true;last=performance.now();raf=requestAnimationFrame(tick)},stop(){run=false;cancelAnimationFrame(raf)},get running(){return run}}}
+function tween(from,to,ms,cb,end){const t0=performance.now();const f=n=>{const p=Math.min(1,(n-t0)/ms);cb(from+(to-from)*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f);else if(end)end()};requestAnimationFrame(f)}
+const pausers=[];
+const done=new Set();
+function mark(i){done.add(i);const t=$(`.tab[data-i="${i}"]`);if(t)t.classList.add('done');$('#progN').textContent=done.size;$$('#progBar i').forEach((x,k)=>x.classList.toggle('on',k<done.size))}
+
+function lineChart(o){
+  const w=o.w||360,h=o.h||250,ml=48,mr=16,mt=18,mb=46,pw=w-ml-mr,ph=h-mt-mb,ymin=o.ymin||0;
+  const X=v=>ml+pw*v/o.xmax,Y=v=>mt+ph*(1-(v-ymin)/(o.ymax-ymin));
+  let s=`<svg viewBox="0 0 ${w} ${h}" class="chart" role="img" aria-label="Grafik">`;
+  for(let v=ymin;v<=o.ymax;v+=o.ystep)s+=`<line x1="${ml}" x2="${w-mr}" y1="${Y(v)}" y2="${Y(v)}" class="gl"/><text x="${ml-6}" y="${Y(v)+4}" text-anchor="end" class="ct">${v}</text>`;
+  for(let v=0;v<=o.xmax;v+=1)s+=`<line x1="${X(v)}" x2="${X(v)}" y1="${mt}" y2="${mt+ph}" class="gl"/><text x="${X(v)}" y="${mt+ph+16}" text-anchor="middle" class="ct">${v}</text>`;
+  s+=`<line x1="${ml}" x2="${ml}" y1="${mt}" y2="${mt+ph}" class="ax"/><line x1="${ml}" x2="${w-mr}" y1="${mt+ph}" y2="${mt+ph}" class="ax"/>`;
+  s+=`<text x="${ml+pw/2}" y="${h-6}" text-anchor="middle" class="ct b">${o.xl}</text><text transform="translate(12 ${mt+ph/2}) rotate(-90)" text-anchor="middle" class="ct b">${o.yl}</text>`;
+  o.series.forEach(se=>{if(!se.pts.length)return;
+    s+=`<polyline fill="none" style="stroke:${se.color}" stroke-width="3.5" stroke-linejoin="round" points="${se.pts.map(p=>X(p[0])+','+Y(p[1])).join(' ')}"/>`;
+    se.pts.forEach(p=>{s+=`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="4.5" style="fill:${se.color};stroke:var(--card)" stroke-width="1.5"/>`;
+      if(o.labels)s+=`<text x="${X(p[0])}" y="${Y(p[1])-9}" text-anchor="middle" class="ct b">${p[1]}</text>`})});
+  return s+'</svg>'}
+
+function quiz(mount,idx,items,silent){
+  const data=items.map(it=>({...it,opts:shuffle([{t:it.ok,c:1},...it.no.map(t=>({t,c:0}))])}));
+  mount.innerHTML=data.map((it,qi)=>`<div class="q" data-q="${qi}"><p class="qt">${qi+1}. ${it.q}</p><div class="opts">${it.opts.map((o,oi)=>`<button type="button" class="opt" data-o="${oi}">${o.t}</button>`).join('')}</div><p class="why" hidden></p></div>`).join('')+`<p class="qscore" aria-live="polite"></p>`;
+  let n=0,r=0;
+  mount.onclick=e=>{const b=e.target.closest('.opt');if(!b)return;const q=b.closest('.q');if(q.dataset.done)return;q.dataset.done=1;
+    const it=data[+q.dataset.q],o=it.opts[+b.dataset.o];
+    $$('.opt',q).forEach((x,k)=>{x.disabled=true;if(it.opts[k].c)x.classList.add('right')});
+    if(o.c)r++;else b.classList.add('wrong');
+    const w=$('.why',q);w.hidden=false;w.className='why '+(o.c?'good':'bad');w.textContent=(o.c?"✔ To'g'ri! ":"✘ Bu javob emas. ")+it.why;
+    n++;if(n===data.length){$('.qscore',mount).textContent=`Natija: ${r} / ${data.length}`;if(!silent)mark(idx)}}}
+
+/* ---------- dars ma'lumotlari ---------- */
+const LESSONS=[
+{cl:'#0B7F8A',cd:'#4CD0DB',tab:'Kuzatish',title:"Kuzatish ko'nikmasi",sub:"Fizik hodisalarni kuzatish; sezgi organlari va asboblar; natijalarni qayd etish",
+ explain:"Kuzatish — hodisani ko'z, quloq, teri kabi sezgi organlari yoki asboblar yordamida diqqat bilan o'rganish. Fizik avval kuzatadi, keyin savol beradi. Sezgi organlari ba'zan adashadi: bir xil iliq suv birovga issiq, boshqasiga sovuq tuyulishi mumkin. Shuning uchun lupa, termometr, chizg'ich kabi asboblardan foydalanamiz. Ko'rganingni darhol yozib bor, chunki xotira aldashi mumkin.",
+ life:"Onang qozondagi suv qaynayotganini ko'zi bilan (pufakchalar) va qulog'i bilan (shovqin) sezadi. Lekin suv aniq necha gradusligini faqat termometr aytadi.",
+ simTitle:"Muz erishi va mayatnikni kuzat",
+ rem:["Kuzatish — sezgi organlari va asboblar yordamida ma'lumot to'plash.","Yozuvda ko'rganingni yoz, taxminingni emas.","Aniq son kerak bo'lsa, asbobdan foydalan."]},
+{cl:'#B85000',cd:'#FF9F4A',tab:'Muloqot',title:"Muloqot qilish va axborotni ifodalash",sub:"Ma'lumotni tushunarli yetkazish; jadval, grafik, gistogramma, rasm; og'zaki va yozma tushuntirish",
+ explain:"Fizikada topilgan natijani boshqalarga tushunarli yetkazish muhim. Ma'lumotni jadval, grafik, gistogramma yoki rasm ko'rinishida ko'rsatish mumkin. Jadval aniq sonlarni beradi, grafik o'zgarishni ko'rsatadi, gistogramma qiymatlarni solishtirishga yordam beradi, rasm esa tez tasavvur beradi. Tushuntirganda avval nima o'lchanganini, keyin nima o'zgarganini, oxirida xulosani ayt.",
+ life:"Ob-havo dasturi kun bo'yi harorat o'zgarishini chiziq (grafik) bilan, hafta kunlarini esa ustunlar bilan ko'rsatadi. Ma'lumot bir xil, ko'rinishi esa turlicha.",
+ simTitle:"Bir xil ma'lumot, to'rt xil ko'rinish",
+ rem:["Bitta ma'lumotni jadval, grafik, gistogramma va rasm bilan ko'rsatish mumkin.","Tushuntirish tartibi: nima o'lchandi, qanday o'zgardi, xulosa.","Sonlar yoniga birlikni (°C, s, g) yozishni unutma."]},
+{cl:'#6B3FE0',cd:'#A58BFF',tab:'Xulosa',title:"Xulosa chiqarish ko'nikmasi",sub:"Kuzatish va tajriba natijalarini tahlil qilish; mantiqiy xulosa; turlicha xulosalar",
+ explain:"Xulosa chiqarish — kuzatish va tajriba natijalariga tayanib mantiqiy fikr aytish. Yaxshi xulosa faqat kuzatilgan faktlardan kelib chiqadi. Bitta kuzatuvdan «hamma jismlar shunday» deb umumlashtirish xato bo'lishi mumkin. Ba'zan bir hodisadan bir nechta to'g'ri taxmin chiqadi, ularni tekshirish uchun yangi tajriba kerak bo'ladi.",
+ life:"Ko'chada yer ho'l ekanini ko'rib, «yomg'ir yog'gan» deysan. Lekin ko'chani suv mashinasi ham yuvgan bo'lishi mumkin. To'g'ri xulosa uchun yana dalil kerak.",
+ simTitle:"Jismni suvga tashla va xulosalarni baholа",
+ rem:["Xulosa kuzatilgan faktlarga tayanadi.","Bitta kuzatuvdan hamma narsa haqida xulosa chiqarma.","Bir hodisadan bir nechta xulosa chiqishi mumkin, ularni tajriba bilan tekshiramiz."]},
+{cl:'#D62839',cd:'#FF7B87',tab:'Gipoteza',title:"Gipoteza ilgari surish va tekshirish",sub:"Gipoteza taklif qilish; tajriba bilan tekshirish; qabul qilish yoki yangi gipoteza",
+ explain:"Gipoteza — hodisa haqida tekshirib ko'riladigan taxmin. U «agar ... bo'lsa, ... bo'ladi» ko'rinishida aytiladi. Gipotezani faqat tajriba tekshiradi. Natija mos kelsa gipoteza qabul qilinadi, mos kelmasa rad etilib, yangisi ilgari suriladi. Gipotezaning rad etilishi xato emas, yangi bilimdir!",
+ life:"Qorong'i xonada chiroq yonmadi. Gipoteza: «lampochka kuygan». Boshqa lampochka o'rnatib tekshirasan: yana yonmadi. Demak, boshqa sabab bor (masalan, elektr o'chgan).",
+ simTitle:"Mayatnik laboratoriyasi",
+ rem:["Gipoteza — tekshiriladigan taxmin.","Tajriba gipotezani tasdiqlaydi yoki rad etadi.","Rad etilgan gipoteza o'rniga yangisini ilgari surish — ilmiy usul."]},
+{cl:'#2456D6',cd:'#7FA6FF',tab:'Rejalashtirish',title:"Tadqiqotni rejalashtirish ko'nikmasi",sub:"Muammo va maqsad; o'zgaruvchilar; usullar; jihozlar; bosqichlar",
+ explain:"Tadqiqotni rejalashtirish — tajribani boshlashdan oldin nima qilishni o'ylab chiqish. Avval muammo va maqsad aniqlanadi. Keyin o'zgaruvchilar belgilanadi: nimani o'zgartiramiz, nimani o'zgarmas tutamiz, nimani o'lchaymiz. So'ng asboblar tanlanib, tajriba bosqichlari tartibga solinadi.",
+ life:"Non yopishdan oldin un, suv va xamirturush miqdorini aniqlab, ishni tartib bilan boshlaysan. Aks holda natija har safar boshqacha chiqadi.",
+ simTitle:"Tajriba rejasini tuz",
+ rem:["Reja: maqsad, o'zgaruvchilar, asboblar, bosqichlar.","Adolatli tajribada faqat bitta kattalik o'zgaradi, qolganlari o'zgarmas.","Yaxshi reja tajribani takrorlash imkonini beradi."]},
+{cl:'#1E8449',cd:'#5FD69A',tab:"O'lchash",title:"O'lchash va asboblardan foydalanish",sub:"Termometr, sekundomer, tarozi; to'g'ri o'lchash; jadval va grafik",
+ explain:"Termometr haroratni (°C), sekundomer vaqtni (s), tarozi massani (g) o'lchaydi. To'g'ri o'lchash uchun avval bo'linma qiymatini aniqla: shkalaning bir bo'lagi nechaga teng? Ko'zingni shkalaga to'g'ri tekislikda tut. O'lchashni bir necha marta takrorla, natijalarni jadvalga yoz va grafik chiz.",
+ life:"Do'konda meva tarozida tortiladi, hamshira esa tana haroratini termometr bilan o'lchaydi. Ikkalasi ham asbobni to'g'ri o'qishga bog'liq.",
+ simTitle:"Virtual asboblar",
+ rem:["Avval bo'linma qiymatini aniqla.","Ko'zing shkala bilan bir tekislikda bo'lsin.","Bir necha marta o'lchab, natijalarni jadvalga yoz."]},
+{cl:'#9A6700',cd:'#F2B84B',tab:'Tajriba',title:"Tajriba o'tkazish va natijalarni tahlil qilish",sub:"Xavfsizlik qoidalari; natijalarni taqqoslash; ilmiy xulosa",
+ explain:"Tajriba o'tkazishda birinchi navbatda xavfsizlik qoidalariga amal qilinadi. Keyin reja bo'yicha ishlab, natijalar jadvalga yoziladi. Turli sharoitdagi natijalar taqqoslanadi. Ilmiy xulosada nima qilingani, qanday natija olingani va bundan nima kelib chiqishi yoziladi.",
+ life:"Oshxonada qaynoq suv quyayotganda qo'lingni kuydirmaslik uchun ehtiyot bo'lasan. Tajribada ham xuddi shunday: avval xavfsizlik, keyin natija.",
+ simTitle:"Xavfsizlik va virtual tajriba",
+ rem:["Tajribadan oldin xavfsizlik qoidalarini bil.","Natijalarni jadval va grafikda taqqosla.","Ilmiy xulosa: nima qildim, nima chiqdi, bundan nima kelib chiqadi."]}
+];
+
+/* ---------- sahifani qurish ---------- */
+const tabs=$('#tabs'),main=$('#main');
+$('#progBar').innerHTML='<i></i>'.repeat(7);
+LESSONS.forEach((L,k)=>{const i=k+1;
+  main.insertAdjacentHTML('beforeend',`<section class="lesson" id="L${i}" style="--cl:${L.cl};--cd:${L.cd}" hidden>
+   <div class="lhead"><span class="num">${i}</span><div><h2>${L.title}</h2><p class="sub">${L.sub}</p></div></div>
+   <article class="card"><h3>Tushuntirish</h3><p>${L.explain}</p></article>
+   <article class="card life"><h3>Hayotiy misol</h3><p>${L.life}</p></article>
+   <article class="card"><h3>Simulyatsiya: ${L.simTitle}</h3><div id="sim${i}"></div></article>
+   <article class="card"><h3>Nazorat savollari</h3><div id="quiz${i}"></div></article>
+   <aside class="remember"><h3>Eslab qol</h3><ul>${L.rem.map(x=>`<li>${x}</li>`).join('')}</ul></aside>
+   <div class="pager">${i>1?`<button class="btn ghost" data-go="${i-1}">Oldingi band</button>`:'<span></span>'}<button class="btn alt" data-go="${i+1}">${i<7?'Keyingi band':'Umumiy testga o\'tish'}</button></div>
+  </section>`);
+  tabs.insertAdjacentHTML('beforeend',`<button class="tab" style="--cl:${L.cl};--cd:${L.cd}" data-i="${i}"><span class="tn">${i}</span>${L.tab}</button>`)});
+main.insertAdjacentHTML('beforeend',`<section class="lesson" id="L8" style="--cl:#14213D;--cd:#FFC93C" hidden>
+  <div class="lhead"><span class="num">★</span><div><h2>Umumiy test</h2><p class="sub">10 ta savol. Hammasiga javob bergach, natijani ko'r.</p></div></div>
+  <article class="card"><div id="testMount"></div></article>
+  <div class="pager"><button class="btn ghost" data-go="7">Oldingi band</button><span></span></div></section>`);
+tabs.insertAdjacentHTML('beforeend',`<button class="tab" style="--cl:#14213D;--cd:#FFC93C" data-i="8"><span class="tn">★</span>Test</button>`);
+
+function go(i,noScroll){pausers.forEach(f=>f());$$('.lesson').forEach(s=>s.hidden=s.id!=='L'+i);
+  $$('.tab').forEach(t=>t.setAttribute('aria-current',t.dataset.i==i?'true':'false'));
+  const t=$(`.tab[data-i="${i}"]`);if(t&&t.scrollIntoView)t.scrollIntoView({block:'nearest',inline:'center'});
+  if(!noScroll){const s=$('#L'+i);if(s)s.scrollIntoView({block:'start'})}}
+tabs.onclick=e=>{const b=e.target.closest('.tab');if(b)go(+b.dataset.i)};
+main.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(+b.dataset.go)});
+
+/* =====================================================
+   1. KUZATISH
+   ===================================================== */
+function initS1(){
+  const R=$('#sim1');
+  R.innerHTML=`
+  <div class="stage"><svg viewBox="0 0 640 300" role="img" aria-label="Chapda tebranayotgan mayatnik, o'ngda stakandagi erayotgan muz">
+    <line x1="60" y1="24" x2="240" y2="24" stroke="var(--edge)" stroke-width="6" stroke-linecap="round"/>
+    <line id="o-rod" x1="150" y1="24" x2="150" y2="194" stroke="var(--ink)" stroke-width="3"/>
+    <circle id="o-bob" cx="150" cy="194" r="18" style="fill:var(--c);stroke:var(--edge)" stroke-width="3"/>
+    <circle cx="150" cy="24" r="5" style="fill:var(--edge)"/>
+    <rect id="o-water" x="402" y="190" width="136" height="80" fill="#7CC6FE" opacity=".75"/>
+    <rect id="o-ice" x="438" y="184" width="64" height="64" rx="8" fill="#E4F8FF" stroke="#4FA3D9" stroke-width="3" opacity=".92"/>
+    <path d="M400 130 L406 270 Q407 274 412 274 L528 274 Q533 274 534 270 L540 130" fill="none" style="stroke:var(--edge)" stroke-width="4" stroke-linejoin="round"/>
+    <text x="150" y="292" text-anchor="middle" class="svgt">Mayatnik</text>
+    <text x="470" y="294" text-anchor="middle" class="svgt">Stakandagi muz</text>
+  </svg></div>
+  <p>Muz erishi vaqti: <span class="read" id="o-ti">0.0</span> daqiqa <span class="sub">(tezlashtirilgan)</span></p>
+  <div class="btns"><button class="btn alt" id="o-go">▶ Boshlash</button><button class="btn" id="o-pause">⏸ To'xtatish</button><button class="btn ghost" id="o-reset">↺ Qayta boshlash</button></div>
+  <p class="lbl">Qanday kuzatamiz? Birini bos:</p>
+  <div class="btns" id="o-senses">
+    <button class="chip" data-s="eye">👁 Ko'rish</button><button class="chip" data-s="ear" aria-pressed="false">👂 Eshitish</button>
+    <button class="chip" data-s="touch">✋ Teginish</button><button class="chip" data-s="lens" aria-pressed="false">🔍 Lupa</button><button class="chip" data-s="therm">🌡 Termometr</button>
+  </div>
+  <div class="say" id="o-say" aria-live="polite">Sezgi yoki asbobni tanla va nimani bilib olishingni o'qi.</div>
+  <div class="stage" id="o-lens" hidden><svg viewBox="0 0 400 190" role="img" aria-label="Lupa ostida muz">
+    <rect x="70" y="15" width="260" height="160" rx="18" fill="#E4F8FF" stroke="#4FA3D9" stroke-width="4"/>
+    <circle cx="120" cy="60" r="7" fill="#fff" stroke="#8CC9EA" stroke-width="2"/><circle cx="210" cy="110" r="10" fill="#fff" stroke="#8CC9EA" stroke-width="2"/>
+    <circle cx="270" cy="55" r="5" fill="#fff" stroke="#8CC9EA" stroke-width="2"/><circle cx="160" cy="140" r="6" fill="#fff" stroke="#8CC9EA" stroke-width="2"/>
+    <path d="M90 40 L150 90 L140 150 M150 90 L250 70 L300 120" fill="none" stroke="#8CC9EA" stroke-width="2.5"/>
+    <text x="200" y="186" text-anchor="middle" class="svgt" style="font-size:12px">Lupa ostida: havo pufakchalari va mayda yoriqlar</text></svg></div>
+  <h4>Mening kuzatuv jadvalim</h4>
+  <div class="row"><select id="o-sel" aria-label="Sezgi yoki asbob"><option>Ko'z bilan</option><option>Quloq bilan</option><option>Teginish bilan</option><option>Lupa bilan</option><option>Termometr bilan</option></select>
+  <input type="text" id="o-txt" placeholder="Masalan: muz yarmiga kichraydi" aria-label="Kuzatuv"><button class="btn alt" id="o-add">Yozib qo'yish</button></div>
+  <p class="msg" id="o-msg" hidden></p>
+  <div class="scroll"><table class="dt"><thead><tr><th>Vaqt (daq)</th><th>Sezgi / asbob</th><th>Kuzatuv</th><th></th></tr></thead><tbody id="o-rows"><tr><td colspan="4">Hali yozuv yo'q. Sahnani ishga tushirib, kuzatganingni yoz.</td></tr></tbody></table></div>`;
+  const rod=$('#o-rod',R),bob=$('#o-bob',R),ice=$('#o-ice',R),water=$('#o-water',R),tiEl=$('#o-ti',R);
+  let t=0,ti=0,sound=false,actx=null,prev=1,lens=false;
+  function tick(){try{if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=880;g.gain.value=.12;o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+.06)}catch(e){}}
+  function draw(snd){
+    const th=25*Math.PI/180*Math.cos(Math.PI*t),x=150+170*Math.sin(th),y=24+170*Math.cos(th);
+    rod.setAttribute('x2',x);rod.setAttribute('y2',y);bob.setAttribute('cx',x);bob.setAttribute('cy',y);
+    const s=th>=0?1:-1;if(snd&&sound&&s!==prev)tick();prev=s;
+    const f=Math.min(1,ti/10),sz=64*Math.cbrt(1-f),wt=190-10*f;
+    water.setAttribute('y',wt);water.setAttribute('height',270-wt);
+    ice.setAttribute('x',470-sz/2);ice.setAttribute('y',wt-.1*sz);ice.setAttribute('width',sz);ice.setAttribute('height',sz);
+    tiEl.textContent=ti.toFixed(1)}
+  const lp=loop(dt=>{t+=dt;if(ti<10)ti=Math.min(10,ti+dt*.25);draw(true)});pausers.push(lp.stop);
+  draw(false);
+  $('#o-go',R).onclick=()=>lp.start();
+  $('#o-pause',R).onclick=()=>lp.stop();
+  $('#o-reset',R).onclick=()=>{lp.stop();t=0;ti=0;draw(false)};
+  const say=$('#o-say',R);
+  $('#o-senses',R).onclick=e=>{const b=e.target.closest('.chip');if(!b)return;const s=b.dataset.s;
+    if(s==='eye')say.textContent="Ko'zing rang, shakl, o'lcham va harakatni ko'radi: mayatnik chapga-o'ngga tebranadi, muz kichrayadi, stakanda suv ko'payadi. Lekin ko'z juda mayda narsalarni ko'rmaydi.";
+    if(s==='ear'){sound=!sound;b.setAttribute('aria-pressed',sound);if(sound)tick();say.textContent=sound?"Ovoz yoqildi: mayatnik eng past nuqtadan o'tganda «tik» eshitiladi. Quloq tebranish ritmini sezishga yordam beradi. Sahnani ishga tushir!":"Ovoz o'chirildi."}
+    if(s==='touch')say.textContent="Barmoq bilan muz sovuq va silliq tuyuladi. Lekin «sovuq» — taxminiy his, uni songa aylantirib bo'lmaydi. Aniq harorat uchun termometr kerak. Haqiqiy tajribada issiq yoki o'tkir jismlarni ushlab ko'rma!";
+    if(s==='lens'){lens=!lens;b.setAttribute('aria-pressed',lens);$('#o-lens',R).hidden=!lens;say.textContent=lens?"Lupa kichik narsalarni kattalashtiradi. Endi muzdagi havo pufakchalari va mayda yoriqlar ko'rinadi. Ko'z bilan ularni yaxshi ko'rmasdik.":"Lupa olib qo'yildi."}
+    if(s==='therm')say.textContent=ti<10?"Termometr aniq son beradi: stakandagi muz va suv aralashmasi taxminan 0 °C.":"Muz to'liq erib bo'ldi. Termometr suv 0 °C dan yuqoriga isiy boshlaganini ko'rsatadi."};
+  const obs=[];
+  function render(){const tb=$('#o-rows',R);if(!obs.length){tb.innerHTML='<tr><td colspan="4">Hali yozuv yo\'q. Sahnani ishga tushirib, kuzatganingni yoz.</td></tr>';return}
+    tb.innerHTML=obs.map((o,i)=>`<tr><td>${o.t}</td><td>${esc(o.s)}</td><td>${esc(o.v)}</td><td><button class="chip" data-d="${i}" aria-label="O'chirish">✕</button></td></tr>`).join('')}
+  $('#o-add',R).onclick=()=>{const inp=$('#o-txt',R),m=$('#o-msg',R),v=inp.value.trim();
+    if(v.length<6){m.hidden=false;m.className='msg bad';m.textContent="Kuzatuvni aniqroq yoz: nima o'zgardi? Masalan: «Muz kichrayib, atrofida suv paydo bo'ldi».";return}
+    const sel=$('#o-sel',R);obs.push({t:ti.toFixed(1),s:sel.options[sel.selectedIndex].text,v});inp.value='';
+    m.hidden=false;m.className='msg good';m.textContent="Yaxshi! Kuzatuvni vaqti bilan yozding.";render()};
+  $('#o-rows',R).onclick=e=>{const b=e.target.closest('[data-d]');if(b){obs.splice(+b.dataset.d,1);render()}};
+}
+
+/* =====================================================
+   2. MULOQOT
+   ===================================================== */
+function initS2(){
+  const R=$('#sim2'),MIN=[0,1,2,3,4,5],TMP=[20,32,44,55,65,74];
+  R.innerHTML=`
+  <p>Choynakdagi suv isitildi. Har daqiqada harorat o'lchandi. Bir xil ma'lumotni to'rt xil ko'rinishda ko'r:</p>
+  <div class="btns" id="v-btns"><button class="chip on" data-v="jadval">Jadval</button><button class="chip" data-v="grafik">Grafik</button><button class="chip" data-v="gist">Gistogramma</button><button class="chip" data-v="rasm">Rasm</button></div>
+  <div class="stage" style="padding:10px" id="v-view"></div>
+  <p class="say" id="v-info"></p>
+  <h4>Vaziyatni yech: qaysi ko'rinish mos?</h4>
+  <p id="v-sc" class="lbl"></p><div class="btns" id="v-ans"><button class="chip" data-a="jadval">Jadval</button><button class="chip" data-a="grafik">Grafik</button><button class="chip" data-a="gist">Gistogramma</button><button class="chip" data-a="rasm">Rasm</button></div>
+  <p class="msg" id="v-fb" hidden></p><button class="btn ghost" id="v-next">Keyingi vaziyat</button>
+  <h4>Ma'lumotni so'z bilan tushuntir</h4>
+  <div class="row"><label>Boshlanish: <select id="s-a"></select></label><label>Tugash: <select id="s-b"></select></label></div>
+  <div class="say" id="s-out" aria-live="polite"></div>`;
+  const INFO={jadval:"Jadval aniq sonlarni beradi, lekin o'zgarishni sezish uchun sonlarni o'qib chiqish kerak.",grafik:"Grafik o'zgarish yo'nalishini ko'rsatadi: chiziq yuqoriga ko'tarilsa, harorat oshmoqda.",gist:"Gistogramma ustunlar balandligini solishtirishga qulay: eng baland ustun — eng issiq payt.",rasm:"Rasm (termometrlar) tez tasavvur beradi: simob qancha baland bo'lsa, suv shuncha issiq."};
+  function view(v){$$('#v-btns .chip',R).forEach(c=>c.classList.toggle('on',c.dataset.v===v));let s='';
+    if(v==='jadval')s=`<div class="scroll"><table class="dt"><tr><th>Vaqt (daq)</th>${MIN.map(m=>`<td>${m}</td>`).join('')}</tr><tr><th>Harorat (°C)</th>${TMP.map(x=>`<td>${x}</td>`).join('')}</tr></table></div>`;
+    if(v==='grafik')s=lineChart({series:[{pts:MIN.map((m,i)=>[m,TMP[i]]),color:'var(--c)'}],xmax:5,ymax:80,ystep:20,xl:'Vaqt (daq)',yl:'Harorat (°C)',labels:true});
+    if(v==='gist'){const W=360,H=250,ml=48,mt=18,pw=296,ph=186;const Y=x=>mt+ph*(1-x/80);
+      s=`<svg viewBox="0 0 ${W} ${H}" class="chart" role="img" aria-label="Gistogramma">`;
+      for(let x=0;x<=80;x+=20)s+=`<line x1="${ml}" x2="${W-16}" y1="${Y(x)}" y2="${Y(x)}" class="gl"/><text x="${ml-6}" y="${Y(x)+4}" text-anchor="end" class="ct">${x}</text>`;
+      TMP.forEach((x,i)=>{const bx=ml+pw*(i+.5)/6-20;s+=`<rect x="${bx}" y="${Y(x)}" width="40" height="${mt+ph-Y(x)}" style="fill:var(--c);stroke:var(--edge)" stroke-width="2"/><text x="${bx+20}" y="${Y(x)-5}" text-anchor="middle" class="ct b">${x}</text><text x="${bx+20}" y="${mt+ph+16}" text-anchor="middle" class="ct">${MIN[i]}</text>`});
+      s+=`<line x1="${ml}" x2="${ml}" y1="${mt}" y2="${mt+ph}" class="ax"/><line x1="${ml}" x2="${W-16}" y1="${mt+ph}" y2="${mt+ph}" class="ax"/><text x="${ml+pw/2}" y="${H-6}" text-anchor="middle" class="ct b">Vaqt (daq)</text><text transform="translate(12 ${mt+ph/2}) rotate(-90)" text-anchor="middle" class="ct b">Harorat (°C)</text></svg>`}
+    if(v==='rasm'){s=`<svg viewBox="0 0 360 230" class="chart" role="img" aria-label="Termometrlar rasmi">`;
+      TMP.forEach((x,i)=>{const cx=30+i*60,top=20,bh=140,fh=bh*x/80;
+        s+=`<rect x="${cx-9}" y="${top}" width="18" height="${bh}" rx="9" style="fill:var(--card);stroke:var(--edge)" stroke-width="2.5"/><rect x="${cx-5}" y="${top+bh-fh}" width="10" height="${fh}" fill="#FF6B4A"/><circle cx="${cx}" cy="${top+bh+10}" r="13" fill="#FF6B4A" style="stroke:var(--edge)" stroke-width="2.5"/><text x="${cx}" y="${top+bh+40}" text-anchor="middle" class="ct b">${x}°</text><text x="${cx}" y="${top+bh+56}" text-anchor="middle" class="ct">${MIN[i]} daq</text>`});
+      s+='</svg>'}
+    $('#v-view',R).innerHTML=s;$('#v-info',R).textContent=INFO[v]}
+  $('#v-btns',R).onclick=e=>{const b=e.target.closest('.chip');if(b)view(b.dataset.v)};view('jadval');
+  const SC=[["3-daqiqadagi aniq haroratni bilmoqchisan. Qaysi ko'rinish qulay?",'jadval',"Jadval aniq sonlarni beradi."],
+   ["Harorat vaqt o'tishi bilan qanday o'zgarayotganini ko'rmoqchisan.",'grafik',"Grafik chizig'i o'zgarish yo'nalishini ko'rsatadi."],
+   ["Turli daqiqalardagi haroratlarni tez solishtirmoqchisan.",'gist',"Ustun balandliklarini yonma-yon solishtirish oson."],
+   ["Hodisani kichkina ukangga tushuntirmoqchisan.",'rasm',"Rasm eng oddiy va ko'rgazmali."]];
+  let sc=0;const fb=$('#v-fb',R);
+  function showSc(){$('#v-sc',R).textContent=SC[sc][0];fb.hidden=true}
+  showSc();
+  $('#v-ans',R).onclick=e=>{const b=e.target.closest('.chip');if(!b)return;const ok=b.dataset.a===SC[sc][1];view(SC[sc][1]);
+    fb.hidden=false;fb.className='msg '+(ok?'good':'bad');fb.textContent=(ok?"✔ To'g'ri! ":"✘ Yana o'yla. Eng mosi ko'rsatildi. ")+SC[sc][2]};
+  $('#v-next',R).onclick=()=>{sc=(sc+1)%SC.length;showSc()};
+  const A=$('#s-a',R),B=$('#s-b',R);A.innerHTML=MIN.map(m=>`<option value="${m}">${m}-daqiqa</option>`).join('');B.innerHTML=A.innerHTML;A.value=1;B.value=5;
+  function sent(){const a=+A.value,b=+B.value,o=$('#s-out',R);
+    if(a>=b){o.textContent="Boshlanish daqiqasi tugash daqiqasidan kichik bo'lsin.";return}
+    const d=TMP[b]-TMP[a];
+    o.innerHTML=`<b>Yozma (hisobot):</b> Suv harorati ${a}-daqiqada ${TMP[a]} °C edi, ${b}-daqiqada esa ${TMP[b]} °C ga yetdi. Demak, ${b-a} daqiqada harorat ${d} °C ga oshdi.<br><br><b>Og'zaki (grafikka ishora qilib):</b> «Do'stlar, grafikka qarang. Suv ${a}-daqiqada ${TMP[a]} gradus edi. Chiziq yuqoriga ko'tarilib, ${b}-daqiqada ${TMP[b]} gradusga yetdi. Demak, suv isidi.»`}
+  A.onchange=B.onchange=sent;sent();
+}
+
+/* =====================================================
+   3. XULOSA
+   ===================================================== */
+function initS3(){
+  const R=$('#sim3');
+  const OBJ={
+   taxta:{name:"Yog'och taxta",ico:"🪵",kind:'float',r:18,obs:"Taxta suv yuzasida suzdi.",st:[
+    ["Bu taxta suvda suzadi.",1,"Bu kuzatuvdan to'g'ridan-to'g'ri kelib chiqadi."],
+    ["Taxta suzdi, demak u shu hajmdagi suvdan yengil bo'lishi mumkin.",1,"Bu kuzatuvga mos, ehtiyotkor taxmin."],
+    ["Barcha jismlar suvda suzadi.",0,"Bitta kuzatuvdan hamma jismlar haqida xulosa chiqarib bo'lmaydi. Tosh cho'kadi-ku!"],
+    ["Taxta quruq bo'lgani uchun suzdi.",0,"Quruqlik haqida hech narsa kuzatilmadi. Bu sabab uydirma."]]},
+   tosh:{name:"Tosh",ico:"🪨",kind:'sink',r:22,a:300,obs:"Tosh suvda cho'kdi.",st:[
+    ["Bu tosh suvda cho'kadi.",1,"Bu kuzatuvning o'zi."],
+    ["Tosh cho'kdi, demak u shu hajmdagi suvdan og'irroq bo'lishi mumkin.",1,"Kuzatuvga mos, ehtiyotkor taxmin."],
+    ["Barcha toshlar cho'kadi.",0,"Bitta toshga qarab hamma toshlar haqida gapirish shoshma-shosharlik."],
+    ["Suv hamma narsani cho'ktiradi.",0,"Taxta suzgani kabi boshqa jismlar suzishi mumkin. Bu xulosa asossiz."]]},
+   mix:{name:"Temir mix",ico:"📌",kind:'sink',r:8,a:240,obs:"Kichkina temir mix suvda cho'kdi.",st:[
+    ["Temir mix suvda cho'kdi.",1,"Bu kuzatuvning o'zi."],
+    ["Mix kichkina bo'lsa ham cho'kdi, demak kichikligi suzish uchun yetarli emas.",1,"Kuzatuvdan mantiqan kelib chiqadi."],
+    ["Kichik jismlar doim suzadi.",0,"Mix kichkina, lekin cho'kdi. Xulosa kuzatuvga zid."],
+    ["Mix uchi o'tkir bo'lgani uchun cho'kdi.",0,"O'tkirlik haqida tajriba qilinmadi. Sabab tekshirilmagan."]]},
+   olma:{name:"Olma",ico:"🍎",kind:'float',r:26,obs:"Olma suvda suzdi, yarmidan ko'pi suv ostida qoldi.",st:[
+    ["Olma suvda suzadi.",1,"Bu kuzatuvning o'zi."],
+    ["Olma suvdan biroz yengil bo'lishi mumkin.",1,"Suzgani uchun bu mantiqli taxmin."],
+    ["Barcha mevalar suzadi.",0,"Faqat olmani sinadik. Boshqa mevalar haqida gapirib bo'lmaydi."],
+    ["Olma qizil bo'lgani uchun suzdi.",0,"Rang haqida hech narsa kuzatilmadi."]]}};
+  R.innerHTML=`
+  <p>Jismni tanla va suvga tashla. Nima bo'lganini kuzat, keyin gaplar mantiqli yoki mantiqsizligini ayt.</p>
+  <div class="btns" id="f-obj">${Object.keys(OBJ).map((k,i)=>`<button class="chip${i?'':' on'}" data-k="${k}">${OBJ[k].ico} ${OBJ[k].name}</button>`).join('')}</div>
+  <div class="stage"><canvas id="f-cv" aria-label="Stakan suv va tashlanayotgan jism"></canvas></div>
+  <div class="btns"><button class="btn alt" id="f-go">▶ Boshlash</button><button class="btn" id="f-pause">⏸ To'xtatish</button><button class="btn ghost" id="f-reset">↺ Qayta boshlash</button></div>
+  <div id="f-st"><p class="msg">Avval jismni suvga tashla, natijani kuzat.</p></div>
+  <p class="say"><b>Bilib qo'y:</b> bir hodisadan bir nechta to'g'ri xulosa chiqishi mumkin. Masalan, toshning cho'kishidan «tosh og'ir» va «tosh suvdan zichroq» deyish mumkin. Qaysi biri to'g'riligini yangi tajriba hal qiladi.</p>`;
+  const cv=$('#f-cv',R),ctx=canvasSetup(cv,720,340);
+  const SURF=160,FLOOR=326,X0=250,X1=470;
+  let key='taxta',st,rip=[];
+  function reset(){st={y:34,vy:0,ent:false,rest:0,fin:false};rip=[];$('#f-st',R).innerHTML='<p class="msg">Avval jismni suvga tashla, natijani kuzat.</p>';draw()}
+  function drawObj(o,x,y){const c=ctx;c.lineWidth=3;c.strokeStyle='#3A2A1A';
+    if(key==='taxta'){c.fillStyle='#C68B4E';c.fillRect(x-32,y-18,64,36);c.strokeRect(x-32,y-18,64,36);c.beginPath();c.moveTo(x-26,y-6);c.lineTo(x+26,y-6);c.moveTo(x-26,y+6);c.lineTo(x+26,y+6);c.lineWidth=1.5;c.stroke()}
+    if(key==='tosh'){c.fillStyle='#8A8F98';c.beginPath();[[-26,8],[-14,-20],[8,-22],[28,-4],[20,20],[-12,22]].forEach((p,i)=>i?c.lineTo(x+p[0],y+p[1]):c.moveTo(x+p[0],y+p[1]));c.closePath();c.fill();c.stroke()}
+    if(key==='mix'){c.fillStyle='#6B7280';c.fillRect(x-32,y-4,64,8);c.strokeRect(x-32,y-4,64,8);c.beginPath();c.arc(x-34,y,9,0,7);c.fill();c.stroke()}
+    if(key==='olma'){c.fillStyle='#E63946';c.beginPath();c.arc(x,y,26,0,7);c.fill();c.stroke();c.fillStyle='#2A9D5C';c.beginPath();c.ellipse(x+8,y-30,10,5,-.6,0,7);c.fill();c.beginPath();c.moveTo(x,y-26);c.lineTo(x+2,y-34);c.stroke()}}
+  function draw(){const c=ctx,ink=cssv('--ink'),edge=cssv('--edge'),o=OBJ[key];c.clearRect(0,0,720,340);
+    drawObj(o,360,st.y);
+    c.fillStyle='rgba(70,160,240,.45)';c.fillRect(X0+2,SURF,X1-X0-4,FLOOR+14-SURF);
+    c.strokeStyle='rgba(255,255,255,.85)';c.lineWidth=2;c.beginPath();c.moveTo(X0+2,SURF);c.lineTo(X1-2,SURF);c.stroke();
+    rip.forEach(r=>{c.strokeStyle=`rgba(255,255,255,${Math.max(0,r.a)})`;c.lineWidth=2;c.beginPath();c.ellipse(360,SURF,r.r,r.r*.25,0,0,7);c.stroke()});
+    c.strokeStyle=edge;c.lineWidth=5;c.lineJoin='round';c.beginPath();c.moveTo(X0,100);c.lineTo(X0,FLOOR+14);c.lineTo(X1,FLOOR+14);c.lineTo(X1,100);c.stroke();
+    c.fillStyle=ink;c.font="700 15px Nunito,sans-serif";c.textAlign='center';c.fillText('Suv',360+80,FLOOR+8);c.textAlign='left'}
+  function step(dt){const o=OBJ[key];rip.forEach(r=>{r.r+=70*dt;r.a-=dt*1.1});rip=rip.filter(r=>r.a>0);
+    if(!st.ent){st.vy+=700*dt;st.y+=st.vy*dt;if(st.y+o.r>=SURF){st.ent=true;rip.push({r:6,a:1});rip.push({r:0,a:.7});st.vy*=.55}}
+    else if(o.kind==='float'){const eq=SURF-o.r*.25;st.vy+=(-80*(st.y-eq)-3.2*st.vy)*dt;st.y+=st.vy*dt;
+      if(Math.abs(st.vy)<4&&Math.abs(st.y-eq)<1)st.rest+=dt;else st.rest=0;if(st.rest>.7)st.fin=true}
+    else{st.vy+=(o.a-4.5*st.vy)*dt;st.y+=st.vy*dt;if(st.y+o.r>=FLOOR){st.y=FLOOR-o.r;st.vy=0;st.fin=true}}}
+  const lp=loop(dt=>{step(dt);draw();if(st.fin){lp.stop();onFin()}});pausers.push(lp.stop);
+  function onFin(){const o=OBJ[key];$('#f-st',R).innerHTML=`<p class="say"><b>Kuzatuv:</b> ${o.obs}</p><p class="lbl">Qaysi gaplar shu kuzatishdan mantiqli kelib chiqadi?</p>`+
+    o.st.map((s,i)=>`<div class="stm" data-i="${i}"><p>${s[0]}</p><div class="btns"><button class="chip" data-a="1">✔ Mantiqli</button><button class="chip" data-a="0">✘ Mantiqsiz</button></div><p class="why" hidden></p></div>`).join('')}
+  $('#f-st',R).onclick=e=>{const b=e.target.closest('.chip');if(!b)return;const box=b.closest('.stm'),s=OBJ[key].st[+box.dataset.i],ok=(b.dataset.a==='1')===!!s[1];
+    $$('.chip',box).forEach(x=>{x.disabled=true});b.classList.add(ok?'ok':'no');const w=$('.why',box);w.hidden=false;w.className='why '+(ok?'good':'bad');
+    w.textContent=(ok?"✔ To'g'ri! ":"✘ Aksincha. ")+s[2]};
+  $('#f-obj',R).onclick=e=>{const b=e.target.closest('.chip');if(!b)return;key=b.dataset.k;$$('#f-obj .chip',R).forEach(x=>x.classList.toggle('on',x===b));lp.stop();reset()};
+  $('#f-go',R).onclick=()=>{if(st.fin)reset();lp.start()};
+  $('#f-pause',R).onclick=()=>lp.stop();
+  $('#f-reset',R).onclick=()=>{lp.stop();reset()};
+  reset();
+}
+
+/* =====================================================
+   4. GIPOTEZA
+   ===================================================== */
+function initS4(){
+  const R=$('#sim4');
+  const HYP={L1:"Mayatnik uzunligi ortsa, davr ham ortadi (sekinroq tebranadi).",L2:"Mayatnik uzunligi ortsa, davr kamayadi (tezroq tebranadi).",L3:"Uzunlik davrga ta'sir qilmaydi.",
+    M1:"Sharcha massasi ortsa, davr ortadi.",M2:"Sharcha massasi ortsa, davr kamayadi.",M3:"Massa davrga ta'sir qilmaydi."};
+  const radios=ks=>ks.map(k=>`<label class="opt"><input type="radio" name="hyp" value="${k}">${HYP[k]}</label>`).join('');
+  R.innerHTML=`
+  <p class="lbl">1-qadam. Savol: mayatnik uzunligi uning davriga ta'sir qiladimi?</p>
+  <p class="sub">Davr — bitta to'liq tebranish vaqti (chapga, o'ngga va orqaga qaytish).</p>
+  <div id="h-l">${radios(['L1','L2','L3'])}</div>
+  <div id="h-m" hidden><p class="lbl">Yangi gipoteza taklif qil (massa haqida):</p>${radios(['M1','M2','M3'])}</div>
+  <p class="lbl">2-qadam. Gipotezani tajribada tekshir</p>
+  <div class="stage"><canvas id="p-cv" aria-label="Mayatnik"></canvas></div>
+  <div class="row"><label for="p-L">Uzunlik: <b id="p-Lv">60</b> sm</label></div>
+  <input type="range" id="p-L" min="20" max="100" step="10" value="60" aria-label="Mayatnik uzunligi">
+  <div class="row"><span>Massa:</span><span id="p-m"><button class="chip" data-m="50">50 g</button> <button class="chip on" data-m="100">100 g</button> <button class="chip" data-m="200">200 g</button></span>
+  <span>Tezlik:</span><span id="p-sp"><button class="chip" data-s="1">×1</button> <button class="chip on" data-s="3">×3</button> <button class="chip" data-s="6">×6</button></span></div>
+  <p>Sekundomer: <span class="read" id="p-t">0.0</span> s &nbsp; Tebranishlar: <span class="read" id="p-n">0</span> / 10</p>
+  <div class="btns"><button class="btn alt" id="p-go">▶ Boshlash</button><button class="btn" id="p-pause">⏸ To'xtatish</button><button class="btn ghost" id="p-reset">↺ Qayta boshlash</button></div>
+  <p class="sub">10 ta tebranish tugagach, natija jadvalga o'zi yoziladi. Uzunlikni (va massani) o'zgartirib, kamida 3 marta o'lcha.</p>
+  <div class="scroll"><table class="dt"><thead><tr><th>Uzunlik (sm)</th><th>Massa (g)</th><th>10 tebranish (s)</th><th>Davr T (s)</th></tr></thead><tbody id="p-rows"><tr><td colspan="4">Hali o'lchov yo'q.</td></tr></tbody></table></div>
+  <div class="btns"><button class="btn ghost" id="p-clear">Jadvalni tozalash</button></div>
+  <p class="lbl">3-qadam. Natijani tahlil qil</p>
+  <button class="btn alt" id="h-check">Gipotezani tekshirish</button>
+  <div class="msg" id="h-res" hidden aria-live="polite"></div>`;
+  const cv=$('#p-cv',R),ctx=canvasSetup(cv,720,380);
+  let L=60,m=100,speed=3,ts=0,cnt=0;const rows=[];const A=12*Math.PI/180;
+  const T0=()=>2*Math.PI*Math.sqrt(L/100/9.81);
+  function draw(){const c=ctx,ink=cssv('--ink'),edge=cssv('--edge'),col=cssv('--c');c.clearRect(0,0,720,380);
+    const px=L*3.2,rb=10+m/200*12,th=A*Math.cos(2*Math.PI*ts/T0()),x=360+px*Math.sin(th),y=30+px*Math.cos(th);
+    c.strokeStyle=edge;c.lineWidth=8;c.lineCap='round';c.beginPath();c.moveTo(260,30);c.lineTo(460,30);c.stroke();
+    c.setLineDash([6,6]);c.lineWidth=1.5;c.strokeStyle=cssv('--soft');c.beginPath();c.moveTo(360,30);c.lineTo(360,30+px+30);
+    [-A,A].forEach(a=>{c.moveTo(360,30);c.lineTo(360+(px+30)*Math.sin(a),30+(px+30)*Math.cos(a))});c.stroke();c.setLineDash([]);
+    c.strokeStyle=ink;c.lineWidth=3;c.beginPath();c.moveTo(360,30);c.lineTo(x,y);c.stroke();
+    c.fillStyle=col;c.strokeStyle=edge;c.lineWidth=3;c.beginPath();c.arc(x,y,rb,0,7);c.fill();c.stroke();
+    c.fillStyle=ink;c.font="800 16px Nunito,sans-serif";c.fillText(`Uzunlik: ${L} sm`,16,30);c.fillText(`Massa: ${m} g`,16,54);
+    $('#p-t',R).textContent=ts.toFixed(1);$('#p-n',R).textContent=Math.min(10,cnt)}
+  function rowsHtml(){const tb=$('#p-rows',R);if(!rows.length){tb.innerHTML='<tr><td colspan="4">Hali o\'lchov yo\'q.</td></tr>';return}
+    tb.innerHTML=rows.map(r=>`<tr><td>${r.L}</td><td>${r.m}</td><td>${r.t10.toFixed(1)}</td><td>${r.T.toFixed(2)}</td></tr>`).join('')}
+  const lp=loop(dt=>{ts+=dt*speed;cnt=Math.floor(ts/T0());
+    if(cnt>=10){ts=10*T0();cnt=10;lp.stop();draw();const t10=10*T0()*(1+rnd(-.015,.015));rows.push({L,m,t10,T:t10/10});if(rows.length>12)rows.shift();rowsHtml();return}
+    draw()});pausers.push(lp.stop);
+  function reset(){lp.stop();ts=0;cnt=0;draw()}
+  reset();
+  $('#p-go',R).onclick=()=>{if(cnt>=10)reset();lp.start()};
+  $('#p-pause',R).onclick=()=>lp.stop();
+  $('#p-reset',R).onclick=reset;
+  $('#p-L',R).oninput=e=>{L=+e.target.value;$('#p-Lv',R).textContent=L;reset()};
+  $('#p-m',R).onclick=e=>{const b=e.target.closest('.chip');if(!b)return;m=+b.dataset.m;$$('#p-m .chip',R).forEach(x=>x.classList.toggle('on',x===b));reset()};
+  $('#p-sp',R).onclick=e=>{const b=e.target.closest('.chip');if(!b)return;speed=+b.dataset.s;$$('#p-sp .chip',R).forEach(x=>x.classList.toggle('on',x===b))};
+  $('#p-clear',R).onclick=()=>{rows.length=0;rowsHtml()};
+  R.addEventListener('change',e=>{if(e.target.name==='hyp')$$('label.opt',R).forEach(l=>l.classList.toggle('sel',l.firstChild.checked))});
+  function lenEffect(){const Ls=[...new Set(rows.map(r=>r.L))];if(Ls.length<2)return null;const lo=Math.min(...Ls),hi=Math.max(...Ls);if(hi-lo<20)return null;
+    const av=l=>{const a=rows.filter(r=>r.L===l).map(r=>r.T);return a.reduce((x,y)=>x+y,0)/a.length};const a=av(lo),b=av(hi);
+    return{e:b>a*1.08?'up':b<a*.92?'down':'none',a,b,lo,hi}}
+  function massEffect(){const Ms=[...new Set(rows.map(r=>r.m))];if(Ms.length<2)return null;
+    const av=mm=>{const a=rows.filter(r=>r.m===mm).map(r=>r.T/Math.sqrt(r.L/100));return a.reduce((x,y)=>x+y,0)/a.length};const lo=Math.min(...Ms),hi=Math.max(...Ms),a=av(lo),b=av(hi);
+    return{e:b>a*1.05?'up':b<a*.95?'down':'none',lo,hi}}
+  $('#h-check',R).onclick=()=>{const h=($('input[name=hyp]:checked',R)||{}).value,res=$('#h-res',R);res.hidden=false;
+    if(!h){res.className='msg bad';res.textContent="Avval yuqoridan gipoteza tanla.";return}
+    const isL=h[0]==='L',eff=isL?lenEffect():massEffect(),want={1:'up',2:'down',3:'none'}[h[1]];
+    if(!eff){res.className='msg';res.textContent=isL?"Ma'lumot yetarli emas. Kamida ikki xil uzunlikda (farqi 20 sm dan kam bo'lmasin) o'lcha.":"Ma'lumot yetarli emas. Massani o'zgartirib (50, 100, 200 g) ham o'lcha.";return}
+    const ok=eff.e===want;let det='';
+    if(isL)det=` (${eff.lo} sm da T ≈ ${eff.a.toFixed(2)} s, ${eff.hi} sm da T ≈ ${eff.b.toFixed(2)} s)`;
+    else det=eff.e==='none'?" (massa turlicha bo'lsa ham davr deyarli bir xil chiqdi)":"";
+    res.className='msg '+(ok?'good':'bad');
+    res.innerHTML=ok?`✔ Tajriba natijalari gipotezani tasdiqladi${det}. Gipotezani <b>qabul qilamiz</b>. Endi yangi savol berib ko'ramiz: massa ta'sir qiladimi?`
+      :`✘ Natijalar gipotezaga zid${det}. Gipotezani <b>rad etamiz</b>. Bu xato emas, yangi bilim! Endi yangi gipoteza taklif qil va yana tekshir.`;
+    $('#h-m',R).hidden=false;$('#h-l',R).hidden=false}
+}
+
+/* =====================================================
+   5. REJALASHTIRISH
+   ===================================================== */
+function initS5(){
+  const R=$('#sim5');
+  const GOALS=[["Metall va chinni idishdagi issiq suvning sovish tezligini solishtirish",1,"Maqsad aniq: nimani nima bilan solishtirishimiz ko'rinib turibdi."],
+   ["Suvni sovutish",0,"Bu juda umumiy: nimani nima bilan solishtirish noma'lum."],
+   ["Hamma idishlar bir xil soviydi",0,"Bu maqsad emas, gipoteza (taxmin)."],
+   ["Qaysi idish chiroyliroq ekanini bilish",0,"Bu fizik tadqiqot maqsadi emas, chunki uni o'lchab bo'lmaydi."]];
+  const CATS={c:"O'zgaradi",s:"O'zgarmaydi",m:"O'lchanadi"};
+  const VARS=[["Idish materiali (metall yoki chinni)",'c'],["Suv miqdori (ml)",'s'],["Suvning boshlang'ich harorati",'s'],["Xona harorati",'s'],["Suv harorati (har 2 daqiqada)",'m'],["Vaqt (daqiqa)",'m']];
+  const TOOLS=[["Termometr",1],["Sekundomer",1],["O'lchov stakani (menzurka)",1],["Metall va chinni idish",1],["Issiq suv",1],["Kompas",0],["Chizg'ich",0],["Magnit",0]];
+  const ORDER=["Ikkala idishga bir xil miqdorda (masalan, 200 ml) issiq suv quyaman","Ikkala idishga termometr tushirib, boshlang'ich haroratni yozaman","Sekundomerni ishga tushiraman","Har 2 daqiqada ikkala idish haroratini o'lchab, jadvalga yozaman","10 daqiqadan so'ng o'lchashni to'xtataman","Jadval yoki grafik tuzib, xulosa chiqaraman"];
+  const NAMES=["Maqsad","O'zgaruvchilar","Asboblar","Bosqichlar"];
+  let cur=0,goal=null,vsel={},tsel=new Set(),ord=[],okStep=false;
+  function ordInit(){do{ord=shuffle(ORDER.map((_,i)=>i))}while(ord.every((v,i)=>v===i))}
+  ordInit();
+  R.innerHTML=`<p><b>Muammo:</b> bir xil issiq suv quyilgan metall va chinni idishlardan qaysi biri tezroq soviydi? Tadqiqot rejasini 4 bosqichda tuz.</p><ol class="stepper" id="pl-st"></ol><div id="pl-body"></div>`;
+  function stepper(){$('#pl-st',R).innerHTML=NAMES.map((n,i)=>`<li class="${i===cur?'act':i<cur?'dn':''}">${i+1}. ${n}</li>`).join('')}
+  function nextBtn(){return `<div class="btns"><button class="btn alt" id="pl-next">${cur<3?'Keyingi bosqich':'Rejani ko\'rish'}</button></div>`}
+  function render(){stepper();const B=$('#pl-body',R);okStep=false;
+    if(cur===0){B.innerHTML=`<p class="lbl">1-bosqich. Tadqiqotning maqsadini qaysi gap to'g'ri ifodalaydi?</p>`+GOALS.map((g,i)=>`<button class="opt" data-g="${i}">${g[0]}</button>`).join('')+`<p class="why" id="pl-fb" hidden></p>`}
+    if(cur===1){B.innerHTML=`<p class="lbl">2-bosqich. Har bir kattalik qanday bo'lishi kerak?</p>`+VARS.map((v,i)=>`<div class="vrow" data-i="${i}"><span class="t">${v[0]}</span><span class="btns" style="margin:0">${Object.keys(CATS).map(k=>`<button class="chip${vsel[i]===k?' on':''}" data-k="${k}">${CATS[k]}</button>`).join('')}</span></div>`).join('')+`<div class="btns"><button class="btn" id="pl-chk">Tekshirish</button></div><p class="msg" id="pl-fb" hidden></p>`}
+    if(cur===2){B.innerHTML=`<p class="lbl">3-bosqich. Bu tajriba uchun kerakli jihoz va asboblarni tanla:</p><div class="btns" id="pl-tools">${TOOLS.map((t,i)=>`<button class="chip${tsel.has(i)?' on':''}" data-t="${i}" aria-pressed="${tsel.has(i)}">${t[0]}</button>`).join('')}</div><div class="btns"><button class="btn" id="pl-chk">Tekshirish</button></div><p class="msg" id="pl-fb" hidden></p>`}
+    if(cur===3){B.innerHTML=`<p class="lbl">4-bosqich. Tajriba bosqichlarini to'g'ri tartibga sol (strelkalar bilan):</p><div id="pl-ord">${ord.map((k,p)=>`<div class="vrow" data-p="${p}"><span class="t">${ORDER[k]}</span><span class="btns" style="margin:0"><button class="chip" data-mv="-1" aria-label="Yuqoriga">▲</button><button class="chip" data-mv="1" aria-label="Pastga">▼</button></span></div>`).join('')}</div><div class="btns"><button class="btn" id="pl-chk">Tekshirish</button></div><p class="msg" id="pl-fb" hidden></p>`}
+    if(cur===4){B.innerHTML=`<div class="card" style="margin:0"><h3>Mening tajriba rejam</h3><p><b>Muammo:</b> qaysi idish tezroq soviydi?</p><p><b>Maqsad:</b> ${GOALS[0][0]}.</p><p><b>O'zgaradigan:</b> idish materiali.</p><p><b>O'zgarmas:</b> suv miqdori, boshlang'ich harorat, xona harorati.</p><p><b>O'lchanadigan:</b> suv harorati va vaqt.</p><p><b>Asboblar:</b> termometr, sekundomer, o'lchov stakani, metall va chinni idish, issiq suv.</p><p><b>Bosqichlar:</b></p><ol>${ORDER.map(s=>`<li>${s}</li>`).join('')}</ol><p class="msg good">Tabriklayman! Reja tayyor. Endi tajribani boshlash mumkin.</p><button class="btn ghost" id="pl-again">Qaytadan tuzish</button></div>`;mark(5)}}
+  function fb(t,good){const f=$('#pl-fb',R);f.hidden=false;f.className=(f.tagName==='P'&&f.classList.contains('why')?'why ':'msg ')+(good?'good':'bad');f.textContent=t}
+  function ok(){okStep=true;const B=$('#pl-body',R);if(!$('#pl-next',R))B.insertAdjacentHTML('beforeend',nextBtn())}
+  R.onclick=e=>{const t=e.target;
+    const g=t.closest('[data-g]');if(g){const it=GOALS[+g.dataset.g];$$('[data-g]',R).forEach(x=>x.classList.remove('sel','right','wrong'));g.classList.add(it[1]?'right':'wrong');fb((it[1]?"✔ To'g'ri! ":"✘ Yana o'yla. ")+it[2],it[1]);if(it[1])ok();return}
+    const kk=t.closest('.vrow [data-k]');if(kk){const i=+kk.closest('.vrow').dataset.i;vsel[i]=kk.dataset.k;$$('[data-k]',kk.parentNode).forEach(x=>x.classList.toggle('on',x===kk));return}
+    const tt=t.closest('[data-t]');if(tt){const i=+tt.dataset.t;tsel.has(i)?tsel.delete(i):tsel.add(i);tt.classList.toggle('on');tt.setAttribute('aria-pressed',tsel.has(i));return}
+    const mv=t.closest('[data-mv]');if(mv){const p=+mv.closest('.vrow').dataset.p,q=p+ +mv.dataset.mv;if(q>=0&&q<ord.length){[ord[p],ord[q]]=[ord[q],ord[p]];render()}return}
+    if(t.id==='pl-next'){cur++;render();return}
+    if(t.id==='pl-again'){cur=0;goal=null;vsel={};tsel=new Set();ordInit();render();return}
+    if(t.id==='pl-chk'){
+      if(cur===1){let bad=0,miss=0;$$('.vrow',R).forEach(r=>{const i=+r.dataset.i;r.classList.remove('ok','no');if(!vsel[i]){miss++;return}if(vsel[i]===VARS[i][1])r.classList.add('ok');else{r.classList.add('no');bad++}});
+        if(miss){fb(`Hali ${miss} ta kattalik tanlanmagan.`,0)}else if(bad){fb(`${bad} ta javob noto'g'ri (qizil). Maslahat: solishtirilayotgan narsa o'zgaradi, adolat uchun qolgan sharoitlar o'zgarmas, natijani ko'rsatuvchi kattaliklar o'lchanadi.`,0)}else{fb("✔ Ajoyib! Faqat bitta kattalik (idish materiali) o'zgaradi, shuning uchun tajriba adolatli.",1);ok()}}
+      if(cur===2){const need=TOOLS.map((x,i)=>x[1]?i:-1).filter(i=>i>=0),miss=need.filter(i=>!tsel.has(i)).length,extra=[...tsel].filter(i=>!TOOLS[i][1]).map(i=>TOOLS[i][0]);
+        if(!miss&&!extra.length){fb("✔ To'g'ri! Harorat, vaqt va suv miqdorini o'lchash uchun aynan shular kerak.",1);ok()}
+        else fb(`${miss?`Yana ${miss} ta kerakli jihoz yetishmayapti. `:''}${extra.length?`Keraksiz: ${extra.join(', ')}. Ular bu tajribada hech qanday kattalikni o'lchashga yordam bermaydi.`:''}`,0)}
+      if(cur===3){let bad=0;$$('#pl-ord .vrow',R).forEach((r,p)=>{r.classList.remove('ok','no');if(ord[p]===p)r.classList.add('ok');else{r.classList.add('no');bad++}});
+        if(bad)fb(`${bad} ta bosqich o'z o'rnida emas (qizil). Avval tayyorgarlik, keyin o'lchash, oxirida tahlil.`,0);else{fb("✔ Tartib to'g'ri!",1);ok()}}}};
+  render();
+}
+
+/* =====================================================
+   6. O'LCHASH
+   ===================================================== */
+function initS6(){
+  const R=$('#sim6'),rows=[];
+  R.innerHTML=`
+  <div class="btns" id="m-seg"><button class="chip on" data-p="a">🌡 Termometr</button><button class="chip" data-p="b">⏱ Sekundomer</button><button class="chip" data-p="c">⚖ Tarozi</button></div>
+  <div id="pa" class="two">
+    <div class="stage"><svg id="th-svg" viewBox="0 0 220 420" role="img" aria-label="Termometr"></svg></div>
+    <div><p>Suv isitilmoqda. <b id="th-min">0</b>-daqiqa.</p>
+      <p class="say">Simob ustuni uchi qaysi chiziqqa to'g'ri kelishini o'qi va yoz.</p>
+      <div class="row"><input type="number" id="th-in" inputmode="numeric" placeholder="Harorat" aria-label="Harorat"><span>°C</span><button class="btn alt" id="th-ok">Yozib olish</button></div>
+      <button class="btn" id="th-next" disabled>Keyingi daqiqa</button> <button class="btn ghost" id="th-new">Qayta boshlash</button>
+      <p class="msg" id="th-msg" hidden></p></div></div>
+  <div id="pb" hidden>
+    <p>To'p yo'lga chiqadi. Sekundomerni to'p qo'zg'alganda <b>Start</b>, marraga yetganda <b>Stop</b> bilan boshqar.</p>
+    <div class="stage"><svg viewBox="0 0 640 120" role="img" aria-label="To'p yo'li"><line x1="50" y1="80" x2="590" y2="80" stroke="var(--edge)" stroke-width="4"/>
+      <line x1="50" y1="40" x2="50" y2="95" stroke="var(--edge)" stroke-width="4"/><line x1="590" y1="40" x2="590" y2="95" stroke="#D62839" stroke-width="4"/>
+      <text x="50" y="32" text-anchor="middle" class="svgt">Start</text><text x="590" y="32" text-anchor="middle" class="svgt">Marra</text>
+      <circle id="sw-ball" cx="50" cy="62" r="16" style="fill:var(--c);stroke:var(--edge)" stroke-width="3"/></svg></div>
+    <p>Sekundomer: <span class="read" id="sw-d">0.00</span> s</p>
+    <div class="btns"><button class="btn ghost" id="sw-launch">🎬 To'pni yo'lga solish</button><button class="btn alt" id="sw-start" disabled>▶ Start</button><button class="btn" id="sw-stop" disabled>■ Stop</button></div>
+    <p class="msg" id="sw-msg" hidden></p></div>
+  <div id="pc" hidden>
+    <p>Chap pallada noma'lum jism. O'ng pallaga toshlar qo'yib, tarozini <b>muvozanatga</b> keltir. Keyin massani hisoblab yoz.</p>
+    <div class="stage"><svg id="bl-svg" viewBox="0 0 420 270" role="img" aria-label="Richagli tarozi"></svg></div>
+    <p class="msg" id="bl-state">Tarozi muvozanatda emas.</p>
+    <div class="btns" id="bl-w">${[1,2,5,10,20,50].map(w=>`<button class="chip" data-w="${w}">+${w} g</button>`).join('')}<button class="chip" data-w="-1">Oxirgisini ol</button><button class="chip" data-w="0">Hammasini ol</button></div>
+    <div class="row"><input type="number" id="bl-in" inputmode="numeric" placeholder="Massa" aria-label="Massa"><span>g</span><button class="btn alt" id="bl-ok">Yozib olish</button><button class="btn ghost" id="bl-new">Yangi jism</button></div>
+    <p class="msg" id="bl-msg" hidden></p></div>
+  <h4>Mening o'lchash jadvalim</h4><div class="scroll" id="m-tab"></div>
+  <h4>Harorat grafigi</h4><div id="m-chart"></div>`;
+  const say=(id,t,g)=>{const e=$(id,R);e.hidden=false;e.className='msg '+(g===1?'good':g===0?'bad':'');e.textContent=t};
+  function table(){const b=rows.length?rows.map((r,i)=>`<tr><td>${i+1}</td><td>${r.tool}</td><td>${esc(r.what)}</td><td>${esc(r.val)}</td><td>${r.ok?'✔':'⚠'}</td></tr>`).join(''):'<tr><td colspan="5">Hali o\'lchov yo\'q.</td></tr>';
+    $('#m-tab',R).innerHTML=`<table class="dt"><thead><tr><th>№</th><th>Asbob</th><th>Kattalik</th><th>Natija</th><th>Baho</th></tr></thead><tbody>${b}</tbody></table>`;
+    const pts=rows.filter(r=>r.tool==='Termometr').map(r=>[r.t,r.v]);
+    $('#m-chart',R).innerHTML=pts.length?lineChart({series:[{pts,color:'var(--c)'}],xmax:6,ymin:10,ymax:70,ystep:10,xl:'Vaqt (daq)',yl:'Harorat (°C)',labels:true}):'<p class="msg">Termometr bilan o\'lchagan sari grafik chiziladi.</p>'}
+  table();
+  $('#m-seg',R).onclick=e=>{const b=e.target.closest('.chip');if(!b)return;$$('#m-seg .chip',R).forEach(x=>x.classList.toggle('on',x===b));['a','b','c'].forEach(k=>$('#p'+k,R).hidden=k!==b.dataset.p)};
+
+  /* termometr */
+  const svg=$('#th-svg',R),Y=v=>20+(70-v)*6;
+  let tk='<rect x="86" y="10" width="28" height="392" rx="14" style="fill:var(--card);stroke:var(--edge)" stroke-width="3"/>';
+  for(let v=10;v<=70;v++){const y=Y(v),len=v%10===0?26:v%5===0?18:10;tk+=`<line x1="116" x2="${116+len}" y1="${y}" y2="${y}" style="stroke:var(--edge)" stroke-width="${v%10===0?2.5:1.2}"/>`;if(v%10===0)tk+=`<text x="${116+len+6}" y="${y+5}" class="svgt">${v}</text>`}
+  tk+='<circle cx="100" cy="396" r="20" fill="#FF6B4A" style="stroke:var(--edge)" stroke-width="3"/><rect id="th-m" x="95" y="380" width="10" height="16" fill="#FF6B4A"/><text x="170" y="410" class="svgt" style="font-size:13px">°C</text>';
+  svg.innerHTML=tk;const merc=$('#th-m',R);
+  let K,t,pend,tries,cur;const val=x=>Math.round(20+K*x);
+  const setM=v=>{merc.setAttribute('y',Y(v));merc.setAttribute('height',396-Y(v))};
+  function thNew(){K=rnd(5,8);t=0;pend=true;tries=0;cur=20;setM(20);$('#th-min',R).textContent=0;$('#th-next',R).disabled=true;$('#th-msg',R).hidden=true;
+    for(let i=rows.length-1;i>=0;i--)if(rows[i].tool==='Termometr')rows.splice(i,1);table()}
+  thNew();
+  $('#th-ok',R).onclick=()=>{const inp=$('#th-in',R),v=parseInt(inp.value,10);if(isNaN(v)){say('#th-msg',"Harorat sonini kirit.");return}
+    if(!pend){say('#th-msg',"Bu daqiqa yozildi. «Keyingi daqiqa» tugmasini bos.");return}
+    const d=v-val(t);
+    if(d===0){rows.push({tool:'Termometr',what:`${t}-daqiqa, suv harorati`,val:`${v} °C`,ok:1,t,v});pend=false;inp.value='';table();
+      if(t>=6){say('#th-msg',"✔ To'g'ri! Barcha o'lchashlar tugadi. Grafikka qara: harorat deyarli to'g'ri chiziq bo'yicha oshdi.",1)}else{say('#th-msg',`✔ To'g'ri! ${tries?`(${tries+1}-urinishda) `:''}Jadvalga yozildi.`,1);$('#th-next',R).disabled=false}tries=0}
+    else{tries++;say('#th-msg',Math.abs(d)===1?"Deyarli! 1 °C xato. Ko'zingni simob uchi bilan bir tekislikda tut va chiziqlarni sanab chiq.":"Xato. Maslahat: shkalada 10 °C oralig'ida 10 ta kichik bo'linma bor, demak 1 bo'linma = 1 °C. Simob uchi qaysi chiziqda?",0)}};
+  $('#th-next',R).onclick=()=>{if(pend||t>=6)return;const a=val(t);t++;pend=true;$('#th-min',R).textContent=t;$('#th-next',R).disabled=true;$('#th-msg',R).hidden=true;tween(a,val(t),700,setM)};
+  $('#th-new',R).onclick=thNew;
+
+  /* sekundomer */
+  const ball=$('#sw-ball',R);let D=0,tb=0,launched=false,swOn=false,swT0=0;
+  const lp=loop(dt=>{if(launched){tb+=dt;if(tb>=D){tb=D;launched=false}ball.setAttribute('cx',50+540*tb/D)}
+    if(swOn)$('#sw-d',R).textContent=((performance.now()-swT0)/1000).toFixed(2);if(!launched&&!swOn)lp.stop()});pausers.push(lp.stop);
+  $('#sw-launch',R).onclick=()=>{D=Math.round(rnd(3,6)*10)/10;tb=0;launched=true;swOn=false;ball.setAttribute('cx',50);$('#sw-d',R).textContent='0.00';$('#sw-start',R).disabled=false;$('#sw-stop',R).disabled=true;$('#sw-msg',R).hidden=true;lp.start()};
+  $('#sw-start',R).onclick=()=>{if(swOn)return;swOn=true;swT0=performance.now();$('#sw-start',R).disabled=true;$('#sw-stop',R).disabled=false;lp.start()};
+  $('#sw-stop',R).onclick=()=>{if(!swOn)return;swOn=false;const me=(performance.now()-swT0)/1000,err=me-D;$('#sw-d',R).textContent=me.toFixed(2);$('#sw-stop',R).disabled=true;
+    const good=Math.abs(err)<=.35;rows.push({tool:'Sekundomer',what:`To'p yo'li (haqiqiy ${D.toFixed(1)} s)`,val:`${me.toFixed(2)} s`,ok:good});table();
+    say('#sw-msg',good?`✔ Yaxshi! Sening natijang ${me.toFixed(2)} s, haqiqiy vaqt ${D.toFixed(1)} s. Farq ${err>=0?'+':''}${err.toFixed(2)} s.`:`Farq katta: ${err>=0?'+':''}${err.toFixed(2)} s (haqiqiy vaqt ${D.toFixed(1)} s). Sabab: odam reaksiyasi kechikadi. Maslahat: 3 marta o'lchab, o'rtacha qiymatni ol.`,good?1:0)};
+
+  /* tarozi */
+  const OBJS=[["🔑","Kalit"],["✏️","Qalam"],["🍎","Olma"],["🪙","Tanga"],["🧦","Paypoq"],["📱","Telefon"]];
+  const bs=$('#bl-svg',R);let mass,obj,pan=[],ang=0,tgt=0;
+  const sum=()=>pan.reduce((a,b)=>a+b,0);
+  function bNew(){mass=Math.floor(rnd(7,97));obj=OBJS[Math.floor(Math.random()*OBJS.length)];pan=[];tgt=0;$('#bl-msg',R).hidden=true;$('#bl-in',R).value='';upd()}
+  function drawB(){const a=ang*Math.PI/180,cx=210,cy=80,Rr=140,xr=cx+Rr*Math.cos(a),yr=cy+Rr*Math.sin(a),xl=cx-Rr*Math.cos(a),yl=cy-Rr*Math.sin(a);
+    let s=`<polygon points="${cx-10},${cy} ${cx+10},${cy} ${cx+26},250 ${cx-26},250" style="fill:var(--sun);stroke:var(--edge)" stroke-width="3"/><rect x="${cx-70}" y="250" width="140" height="10" rx="4" style="fill:var(--edge)"/>`;
+    s+=`<line x1="${xl}" y1="${yl}" x2="${xr}" y2="${yr}" style="stroke:var(--edge)" stroke-width="7" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="8" style="fill:var(--c);stroke:var(--edge)" stroke-width="3"/>`;
+    [[xl,yl],[xr,yr]].forEach(([x,y],k)=>{s+=`<line x1="${x}" y1="${y}" x2="${x-46}" y2="${y+70}" style="stroke:var(--edge)" stroke-width="2"/><line x1="${x}" y1="${y}" x2="${x+46}" y2="${y+70}" style="stroke:var(--edge)" stroke-width="2"/><rect x="${x-52}" y="${y+70}" width="104" height="9" rx="4" style="fill:var(--edge)"/>`;
+      if(k===0)s+=`<text x="${x}" y="${y+62}" text-anchor="middle" font-size="38">${obj[0]}</text><text x="${x}" y="${y+98}" text-anchor="middle" class="svgt">${obj[1]}</text>`;
+      else pan.slice(0,12).forEach((w,i)=>{const px=x-45+(i%4)*24,py=y+70-16-Math.floor(i/4)*18;s+=`<rect x="${px}" y="${py}" width="22" height="16" rx="3" fill="#9AA5B1" style="stroke:var(--edge)" stroke-width="1.5"/><text x="${px+11}" y="${py+12}" text-anchor="middle" style="font:800 10px Nunito,sans-serif;fill:#14213D">${w}</text>`})});
+    bs.innerHTML=s}
+  const bl=loop(dt=>{ang+=(tgt-ang)*Math.min(1,dt*8);if(Math.abs(tgt-ang)<.02){ang=tgt;bl.stop()}drawB()});pausers.push(bl.stop);
+  function upd(){const d=sum()-mass;tgt=Math.max(-14,Math.min(14,d*1.2));const st=$('#bl-state',R);
+    st.className='msg '+(d===0?'good':'');st.textContent=d===0?"Tarozi muvozanatda! Endi qo'yilgan toshlar massasini qo'shib, jism massasini yoz.":d>0?"O'ng pallada juda ko'p: pastga tushdi. Bir nechta toshni ol.":"Chap pallada jism og'irroq: pastga tushdi. Toshlar qo'y.";
+    if(pan.length>12)st.textContent+=" (Ekranda 12 tagacha tosh ko'rinadi.)";bl.start()}
+  $('#bl-w',R).onclick=e=>{const b=e.target.closest('[data-w]');if(!b)return;const w=+b.dataset.w;if(w>0){if(pan.length<20)pan.push(w)}else if(w<0)pan.pop();else pan=[];upd()};
+  $('#bl-ok',R).onclick=()=>{const v=parseInt($('#bl-in',R).value,10);if(isNaN(v)){say('#bl-msg',"Massani kirit.");return}
+    if(sum()!==mass){say('#bl-msg',"Avval tarozini muvozanatga keltir: shundagina toshlar massasi jism massasiga teng bo'ladi.",0);return}
+    if(v===mass){rows.push({tool:'Tarozi',what:`${obj[1]} massasi`,val:`${v} g`,ok:1});table();say('#bl-msg',`✔ To'g'ri! ${obj[1]} massasi ${v} g.`,1)}
+    else say('#bl-msg',`Xato. Pallada ${pan.join(' + ')} g bor. Ularni qayta qo'shib chiq.`,0)};
+  $('#bl-new',R).onclick=bNew;bNew();
+}
+
+/* =====================================================
+   7. TAJRIBA
+   ===================================================== */
+function initS7(){
+  const R=$('#sim7');
+  const SAFE=[["Tajribani o'qituvchi ruxsat bergandan keyin boshlayman.",1,"To'g'ri: ruxsatsiz va rejasiz tajriba xavfli."],
+   ["Noma'lum suyuqlikning ta'mini ko'raman.",0,"Xato: laboratoriyada hech narsani tatib ko'rmaymiz."],
+   ["Qaynoq suvli idishni yugurib ko'chiraman.",0,"Xato: yugurganda suv sachrab, kuydirishi mumkin. Idish sekin va ehtiyot bilan ko'chiriladi."],
+   ["Shisha idish sinsa, o'zim yig'masdan o'qituvchiga aytaman.",1,"To'g'ri: siniq shisha kesib olishi mumkin."],
+   ["Termometrni aralashtirgich sifatida ishlataman.",0,"Xato: termometr sinishi mumkin. Aralashtirish uchun maxsus tayoqcha bor."],
+   ["Tajribadan keyin joyni tartibga keltirib, qo'limni yuvaman.",1,"To'g'ri: bu xavfsizlik va tartib qoidasi."]];
+  R.innerHTML=`
+  <p class="lbl">1-qadam. Xavfsizlik qoidalari: har bir gap qoidaga mosmi?</p>
+  <div id="sf">${SAFE.map((s,i)=>`<div class="stm" data-i="${i}"><p>${s[0]}</p><div class="btns"><button class="chip" data-a="1">✔ Qoidaga mos</button><button class="chip" data-a="0">✘ Qoidaga zid</button></div><p class="why" hidden></p></div>`).join('')}</div>
+  <p class="msg" id="sf-msg">Hamma gapga to'g'ri javob ber, shunda tajriba ochiladi.</p>
+  <div id="ex" class="locked">
+   <p class="lbl">2-qadam. Virtual tajriba: 100 ml va 200 ml suv bir xil isitgichda isitiladi.</p>
+   <div class="stage"><canvas id="e-cv" aria-label="Ikki stakan suv isitilmoqda"></canvas></div>
+   <p>Vaqt: <span class="read" id="e-t">0 daq 00 s</span> <span class="sub">(tezlashtirilgan)</span></p>
+   <div class="btns"><button class="btn alt" id="e-go">▶ Boshlash</button><button class="btn" id="e-pause">⏸ To'xtatish</button><button class="btn ghost" id="e-reset">↺ Qayta boshlash</button></div>
+   <div class="scroll"><table class="dt"><thead><tr><th>Vaqt (daq)</th><th>100 ml (°C)</th><th>200 ml (°C)</th></tr></thead><tbody id="e-rows"></tbody></table></div>
+   <div id="e-chart"></div>
+   <div id="e-after" hidden>
+     <p class="lbl">3-qadam. Natijalarni taqqosla</p><div id="e-q"></div>
+     <p class="lbl">4-qadam. Ilmiy xulosa yoz</p>
+     <p class="sub">Xulosada bo'lsin: nima qildim, qanday natija chiqdi (sonlar bilan), bundan nima kelib chiqadi.</p>
+     <textarea id="e-txt" placeholder="Masalan: Men 100 ml va 200 ml suvni bir xil isitgichda isitdim. 8 daqiqadan keyin ... Demak, ..."></textarea>
+     <div class="btns"><button class="btn alt" id="e-chk">Xulosani tekshirish</button><button class="btn ghost" id="e-ex">Namuna ko'rish</button></div>
+     <div id="e-fb"></div></div>
+  </div>`;
+  let good=0;const sf=$('#sf',R);
+  sf.onclick=e=>{const b=e.target.closest('.chip');if(!b||b.disabled)return;const box=b.closest('.stm'),s=SAFE[+box.dataset.i],ok=(b.dataset.a==='1')===!!s[1],w=$('.why',box);
+    w.hidden=false;w.className='why '+(ok?'good':'bad');w.textContent=(ok?"✔ ":"✘ Qaytadan o'yla. ")+(ok?s[2]:"");
+    if(ok){$$('.chip',box).forEach(x=>x.disabled=true);b.classList.add('ok');good++;if(good===SAFE.length){$('#sf-msg',R).className='msg good';$('#sf-msg',R).textContent="✔ Xavfsizlik qoidalarini bilasan. Tajriba ochildi!";$('#ex',R).classList.remove('locked')}}
+    else{b.classList.add('no');setTimeout(()=>b.classList.remove('no'),1200);w.textContent+=s[2]}};
+  const cv=$('#e-cv',R),ctx=canvasSetup(cv,720,380);
+  let sim=0,T1=20,T2=20,rec=0,fin=false;const data=[[0,20,20]];
+  const f1=m=>20+40*60/(4.2*100)*m+rnd(-.3,.3),f2=m=>20+40*60/(4.2*200)*m+rnd(-.3,.3);
+  function draw(){const c=ctx,ink=cssv('--ink'),edge=cssv('--edge');c.clearRect(0,0,720,380);const ph=performance.now()/120;
+    [{x:200,v:100,T:T1},{x:520,v:200,T:T2}].forEach(b=>{const h=b.v/200*170,top=270-h,k=Math.max(0,Math.min(1,(b.T-20)/50));
+      c.fillStyle=`rgb(${Math.round(100+140*k)},${Math.round(180-70*k)},${Math.round(245-165*k)})`;c.fillRect(b.x-70,top,140,h);
+      c.fillStyle='#4B5563';c.fillRect(b.x-90,274,180,14);
+      if(sim>0&&!fin||sim>0&&sim<480)for(let i=-2;i<=2;i++){const fx=b.x+i*28,fh=16+6*Math.sin(ph+i*1.7);c.fillStyle='#FF9F1C';c.beginPath();c.moveTo(fx-10,306);c.lineTo(fx,306-fh+10);c.lineTo(fx+10,306);c.closePath();c.fill()}
+      c.strokeStyle=edge;c.lineWidth=5;c.lineJoin='round';c.beginPath();c.moveTo(b.x-75,80);c.lineTo(b.x-75,270);c.lineTo(b.x+75,270);c.lineTo(b.x+75,80);c.stroke();
+      c.fillStyle=ink;c.textAlign='center';c.font="800 20px Nunito,sans-serif";c.fillText(`${b.v} ml suv`,b.x,350);c.font="800 26px Nunito,sans-serif";c.fillText(`${b.T.toFixed(1)} °C`,b.x,48);c.textAlign='left'})}
+  function tbl(){$('#e-rows',R).innerHTML=data.map(r=>`<tr><td>${r[0]}</td><td>${r[1].toFixed(1)}</td><td>${r[2].toFixed(1)}</td></tr>`).join('');
+    $('#e-chart',R).innerHTML=lineChart({series:[{pts:data.map(r=>[r[0],+r[1].toFixed(1)]),color:'#D62839'},{pts:data.map(r=>[r[0],+r[2].toFixed(1)]),color:'#2456D6'}],xmax:8,ymax:80,ystep:20,xl:'Vaqt (daq)',yl:'Harorat (°C)'})+
+      `<p class="sub" style="text-align:center"><b style="color:#D62839">━ 100 ml</b> &nbsp; <b style="color:#2456D6">━ 200 ml</b></p>`}
+  const lp=loop(dt=>{sim=Math.min(480,sim+dt*30);T1=20+40*60/(4.2*100)*sim/60;T2=20+40*60/(4.2*200)*sim/60;
+    while(rec<Math.floor(sim/60)){rec++;data.push([rec,f1(rec),f2(rec)]);tbl()}
+    $('#e-t',R).textContent=`${Math.floor(sim/60)} daq ${String(Math.floor(sim%60)).padStart(2,'0')} s`;draw();
+    if(sim>=480){lp.stop();fin=true;T1=data[8][1];T2=data[8][2];draw();$('#e-after',R).hidden=false;qs()}});pausers.push(lp.stop);
+  function qs(){const a=data[8][1],b=data[8][2];
+    quiz($('#e-q',R),7,[{q:`8-daqiqada qaysi stakandagi suv issiqroq bo'ldi? (100 ml: ${a.toFixed(1)} °C, 200 ml: ${b.toFixed(1)} °C)`,ok:"100 ml li stakandagi",no:["200 ml li stakandagi","Ikkalasi bir xil"],why:`100 ml da harorat ${(a-20).toFixed(1)} °C ga, 200 ml da ${(b-20).toFixed(1)} °C ga oshdi.`},
+      {q:"Nima uchun 100 ml suv tezroq isidi?",ok:"Bir xil isitgich issiqligi kamroq suvga tushdi",no:["Kichik stakan chiroyli edi","Suv kamroq bo'lsa, u sovuqroq bo'ladi"],why:"Bir xil issiqlik miqdori kam suvni ko'proq isitadi."}],true)}
+  function reset(){lp.stop();sim=0;rec=0;fin=false;T1=T2=20;data.length=1;$('#e-t',R).textContent='0 daq 00 s';$('#e-after',R).hidden=true;tbl();draw()}
+  reset();
+  $('#e-go',R).onclick=()=>{if(fin)reset();lp.start()};
+  $('#e-pause',R).onclick=()=>lp.stop();
+  $('#e-reset',R).onclick=reset;
+  const EX=()=>{const a=data[8]||[8,66,43];return `Men 100 ml va 200 ml suvni bir xil isitgichda 8 daqiqa isitdim va har daqiqada haroratni o'lchadim. Boshida ikkalasi ham 20 °C edi. 8-daqiqada 100 ml suv ${a[1].toFixed(0)} °C ga, 200 ml suv ${a[2].toFixed(0)} °C ga yetdi. Demak, bir xil isitgichda suv kam bo'lsa, u tezroq isiydi.`};
+  $('#e-chk',R).onclick=()=>{const v=$('#e-txt',R).value.toLowerCase(),c=[["Nima qilganing yozilgan (isit, o'lchа, tajriba)",/isit|o'lch|tajriba|qildim/.test(v)],["Sonlar bor (masalan, °C yoki ml)",/\d/.test(v)&&/(°|gradus|ml)/.test(v)],["Ikkala stakan taqqoslangan",/100/.test(v)&&/200/.test(v)],["Xulosa bor (demak, shunday qilib)",/demak|shunday qilib|xulosa/.test(v)],["Tezroq/sekinroq kabi taqqoslash so'zi bor",/tez|sekin|kam|ko'p/.test(v)]];
+    const n=c.filter(x=>x[1]).length;$('#e-fb',R).innerHTML=`<p class="msg ${n===5?'good':''}"><b>${n} / 5</b> ${n===5?"— ajoyib ilmiy xulosa!":"— yana bir oz to'ldir."}</p>`+c.map(x=>`<p style="margin:2px 0">${x[1]?'✔':'✘'} ${x[0]}</p>`).join('')};
+  $('#e-ex',R).onclick=()=>{$('#e-fb',R).innerHTML=`<p class="say"><b>Namuna:</b> ${EX()}</p>`};
+}
+
+/* =====================================================
+   UMUMIY TEST
+   ===================================================== */
+function initTest(){
+  const R=$('#testMount');
+  const TEST=[
+   {q:"Ko'rish, eshitish, teginish — bular fizik kuzatishda nima hisoblanadi?",ok:"Sezgi organlari orqali ma'lumot olish usullari",no:["Tajriba xavfsizligi qoidalari","Gipoteza turlari","O'lchov birliklari"],why:"Kuzatish sezgi organlari va asboblar yordamida amalga oshadi."},
+   {q:"Suvning aniq haroratini bilish uchun nimadan foydalanish kerak?",ok:"Termometr",no:["Barmoq bilan ushlab ko'rish","Lupa","Tarozi"],why:"Aniq harorat uchun termometr ishlatiladi."},
+   {q:"Vaqt o'tishi bilan kattalik qanday o'zgarishini eng yaxshi ko'rsatadigan ko'rinish qaysi?",ok:"Grafik",no:["Faqat rasm","Faqat so'z bilan","Ro'yxat"],why:"Grafik chizig'i o'zgarish yo'nalishini ko'rsatadi."},
+   {q:"«Tosh cho'kdi, demak barcha jismlar cho'kadi.» Bu xulosa qanday?",ok:"Mantiqsiz: bitta kuzatuvdan hamma haqida xulosa chiqarilgan",no:["Mantiqli, chunki tosh og'ir","Mantiqli, chunki suv chuqur","To'g'ri, chunki hamma shunday deydi"],why:"Boshqa jismlar (taxta, olma) suzadi."},
+   {q:"Gipoteza nima?",ok:"Tajribada tekshiriladigan taxmin",no:["Tajriba natijasi","Asbob nomi","Xavfsizlik qoidasi"],why:"Gipoteza tekshirilishi kerak bo'lgan taxmin."},
+   {q:"Gipoteza tajribada tasdiqlanmasa, nima qilinadi?",ok:"Uni rad etib, yangi gipoteza ilgari suriladi",no:["Natijani gipotezaga moslab yozamiz","Tajribani yashiramiz","Hech narsa qilmaymiz"],why:"Rad etilgan gipoteza ham yangi bilim beradi."},
+   {q:"Issiq suv sovish tajribasida qaysi kattalikni o'zgarmas tutish kerak?",ok:"Suv miqdorini",no:["Idish materialini (agar uni solishtirsak)","Vaqtni","O'lchangan haroratni"],why:"Adolatli tajribada solishtirilayotgan kattalikdan boshqasi o'zgarmaydi."},
+   {q:"Sekundomer qaysi kattalikni o'lchaydi?",ok:"Vaqtni",no:["Massani","Haroratni","Uzunlikni"],why:"Sekundomer vaqtni soniyalarda o'lchaydi."},
+   {q:"Termometr shkalasida 10 °C oralig'ida 5 ta bo'linma bo'lsa, 1 bo'linma nechaga teng?",ok:"2 °C",no:["1 °C","5 °C","10 °C"],why:"10 ni 5 ga bo'lamiz: 2 °C."},
+   {q:"Tajribani boshlashdan oldin birinchi navbatda nima qilish kerak?",ok:"Xavfsizlik qoidalarini bilib, o'qituvchi ruxsatini olish",no:["Jihozlarni tatib ko'rish","Natijani oldindan yozib qo'yish","Yugurib jihoz olib kelish"],why:"Xavfsizlik har doim birinchi o'rinda."}];
+  function render(){const data=TEST.map(it=>({...it,opts:shuffle([{t:it.ok,c:1},...it.no.map(t=>({t,c:0}))]),pick:-1}));let locked=false;
+    R.innerHTML=data.map((it,qi)=>`<div class="q" data-q="${qi}"><p class="qt">${qi+1}. ${it.q}</p>${it.opts.map((o,oi)=>`<button type="button" class="opt" data-o="${oi}">${o.t}</button>`).join('')}<p class="why" hidden></p></div>`).join('')+`<div class="btns"><button class="btn alt" id="t-fin">Natijani ko'rish</button></div><div id="t-res" aria-live="polite"></div>`;
+    R.onclick=e=>{const b=e.target.closest('.opt');
+      if(b&&!locked){const q=b.closest('.q');$$('.opt',q).forEach(x=>x.classList.remove('sel'));b.classList.add('sel');data[+q.dataset.q].pick=+b.dataset.o;return}
+      if(e.target.id==='t-again'){render();R.scrollIntoView({block:'start'});return}
+      if(e.target.id==='t-fin'&&!locked){const left=data.filter(d=>d.pick<0).length;const res=$('#t-res',R);
+        if(left){res.innerHTML=`<p class="msg bad">Yana ${left} ta savolga javob berilmagan.</p>`;return}
+        locked=true;let sc=0;$$('.q',R).forEach((q,qi)=>{const it=data[qi],o=it.opts[it.pick];$$('.opt',q).forEach((x,k)=>{x.disabled=true;if(it.opts[k].c)x.classList.add('right')});
+          if(o.c)sc++;else $$('.opt',q)[it.pick].classList.add('wrong');const w=$('.why',q);w.hidden=false;w.className='why '+(o.c?'good':'bad');w.textContent=(o.c?"✔ ":"✘ ")+it.why});
+        const pct=sc*10,lvl=sc>=9?"A'lo! Sen haqiqiy yosh fiziksan!":sc>=7?"Yaxshi! Yana biroz takrorlasang, a'lo bo'ladi.":sc>=5?"Qoniqarli. Xato qilgan savollaringni qayta ko'r.":"Bandlarni qayta ko'rib chiq va yana urinib ko'r.";
+        res.innerHTML=`<svg class="ring" viewBox="0 0 120 120" role="img" aria-label="Natija ${sc} / 10"><circle cx="60" cy="60" r="50" fill="none" style="stroke:var(--grid)" stroke-width="14"/><circle cx="60" cy="60" r="50" fill="none" style="stroke:var(--c)" stroke-width="14" stroke-linecap="round" stroke-dasharray="${(pct*3.1416).toFixed(1)} 314.16" transform="rotate(-90 60 60)"/><text x="60" y="68" text-anchor="middle" style="font:800 28px 'Baloo 2',sans-serif;fill:var(--ink)">${sc}/10</text></svg><p class="qscore" style="text-align:center">${lvl}</p><div class="btns" style="justify-content:center"><button class="btn alt" id="t-again">Qayta topshirish</button></div>`}}}
+  render();
+}
+
+initS1();initS2();initS3();initS4();initS5();initS6();initS7();
+quiz($('#quiz1'),1,[
+ {q:"Qaysi biri kuzatish natijasi (ko'z yoki asbob bilan olingan aniq ma'lumot)?",ok:"Muz 3 daqiqada kichrayib, atrofida suv paydo bo'ldi",no:["Muz suvni yaxshi ko'radi","Ertaga ham xuddi shunday bo'ladi","Muz eng chiroyli jism"],why:"Kuzatish — ko'rilgan yoki o'lchangan fakt."},
+ {q:"Muzning haroratini aniq bilish uchun nima kerak?",ok:"Termometr",no:["Barmoq bilan ushlab ko'rish","Ko'z bilan qarash","Quloq solish"],why:"His taxminiy, termometr esa aniq son beradi."},
+ {q:"Lupa nima uchun kerak?",ok:"Kichik narsalarni kattalashtirib ko'rish uchun",no:["Haroratni o'lchash uchun","Vaqtni o'lchash uchun","Massani o'lchash uchun"],why:"Lupa mayda tafsilotlarni ko'rsatadi."}]);
+quiz($('#quiz2'),2,[
+ {q:"Vaqt o'tishi bilan qiymat qanday o'zgarishini ko'rsatishga qaysi ko'rinish qulay?",ok:"Grafik",no:["Faqat jadval yoki grafik farq qilmaydi","Rasm faqat","Hech qaysi"],why:"Grafik chizig'i oshish yoki kamayishni bir qarashda ko'rsatadi."},
+ {q:"Natijani tushuntirganda birinchi nimani aytish kerak?",ok:"Nima o'lchanganini va qaysi birlikda",no:["Faqat xulosani","Faqat eng katta sonni","Boshqa tajribalarni"],why:"Avval nima o'lchanganini aytamiz, keyin o'zgarishni, oxirida xulosani."},
+ {q:"Gistogramma nima uchun qulay?",ok:"Qiymatlarni ustun balandligi bo'yicha yonma-yon solishtirish uchun",no:["Faqat chiroyli bo'lgani uchun","Aniq vaqtni ko'rsatgani uchun","Massani o'lchagani uchun"],why:"Ustunlar balandligini solishtirish oson."}]);
+quiz($('#quiz3'),3,[
+ {q:"Bitta kuzatuvdan «hamma jismlar shunday» deb xulosa chiqarish qanday?",ok:"Noto'g'ri: boshqa jismlarni ham sinash kerak",no:["Har doim to'g'ri","Faqat tosh uchun to'g'ri","Muhim emas"],why:"Ishonchli xulosa uchun ko'proq kuzatuv kerak."},
+ {q:"Yaxshi xulosa nimaga tayanadi?",ok:"Kuzatilgan va o'lchangan faktlarga",no:["Kimning ovozi balandligiga","Chiroyli tuyulishiga","Taxminga"],why:"Xulosa faktlardan kelib chiqadi."},
+ {q:"Bir hodisadan bir nechta xulosa chiqishi mumkinmi?",ok:"Ha, ularni tekshirish uchun yangi tajriba kerak",no:["Yo'q, faqat bitta","Faqat o'qituvchi ayta oladi","Hech qachon"],why:"Turli taxminlarni tajriba bilan tekshiramiz."}]);
+quiz($('#quiz4'),4,[
+ {q:"Quyidagilardan qaysi biri gipoteza?",ok:"Agar mayatnik uzunligi oshsa, uning davri ham oshadi",no:["Mayatnik tebranmoqda","Mayatnik chiroyli","Mayatnik ipga osilgan"],why:"Gipoteza «agar ... bo'lsa, ... bo'ladi» ko'rinishidagi tekshiriladigan taxmin."},
+ {q:"Gipoteza tasdiqlanmadi. To'g'ri harakat qaysi?",ok:"Gipotezani rad etib, yangisini ilgari suraman",no:["Natijani gipotezaga moslab yozaman","Tajribani yashiraman","Hech narsa yozmayman"],why:"Halol natija muhim: rad etilgan gipoteza ham bilim beradi."},
+ {q:"Gipotezani nima tekshiradi?",ok:"Tajriba va o'lchash natijalari",no:["Kimning ovozi baland ekani","Gipotezaning chiroyli aytilishi","Do'stlar fikri"],why:"Faqat tajriba gipotezani tekshiradi."}]);
+quiz($('#quiz5'),5,[
+ {q:"Reja tuzishda birinchi navbatda nima aniqlanadi?",ok:"Muammo va maqsad",no:["Natija","Xulosa","Grafik rangi"],why:"Nimani aniqlashni bilmasdan tajriba qilib bo'lmaydi."},
+ {q:"Idish materiali o'zgaradigan kattalik bo'lsa, quyidagilardan qaysi biri o'zgarmas tutiladi?",ok:"Suv miqdori",no:["Idish materiali","O'lchangan harorat","Vaqt"],why:"Adolatli tajribada faqat bitta kattalik o'zgaradi."},
+ {q:"Tajriba bosqichlari nima uchun rejalashtiriladi?",ok:"Natija to'g'ri bo'lishi va tajriba takrorlanishi uchun",no:["Tajriba chiroyli ko'rinishi uchun","Vaqtni cho'zish uchun","Asboblarni ko'paytirish uchun"],why:"Tartibli reja ishonchli natija beradi."}]);
+quiz($('#quiz6'),6,[
+ {q:"Termometrda ikki katta chiziq orasi 10 °C, oralig'ida 5 ta kichik bo'linma bor. 1 bo'linma nechaga teng?",ok:"2 °C",no:["1 °C","5 °C","10 °C"],why:"10 °C ni 5 ga bo'lamiz: 2 °C."},
+ {q:"Sekundomer bilan o'lchash xatoligini kamaytirish uchun nima qilish kerak?",ok:"Bir necha marta o'lchab, o'rtacha qiymatni olish",no:["Bir marta o'lchash","Ko'zni yumib bosish","Asbobni silkitish"],why:"Bir necha o'lchash tasodifiy xatoni kamaytiradi."},
+ {q:"Tarozi qaysi kattalikni o'lchaydi?",ok:"Massani",no:["Haroratni","Vaqtni","Uzunlikni"],why:"Tarozi massani grammlarda o'lchaydi."}]);
+quiz($('#quiz7'),7,[
+ {q:"Qaynoq suv bilan ishlashda eng to'g'ri qoida qaysi?",ok:"O'qituvchi ruxsati bilan, ehtiyotkor va sekin ishlash",no:["Yugurib ko'chirish","Qo'l bilan sinab ko'rish","Idishni bir qo'lda ushlab silkitish"],why:"Kuyishning oldini olish uchun ehtiyotkorlik kerak."},
+ {q:"Ilmiy xulosa nimalardan iborat?",ok:"Nima qilindi, qanday natija chiqdi, bundan nima kelib chiqadi",no:["Faqat sonlar","Faqat chiroyli rasm","Faqat taxmin"],why:"Xulosa tajriba, natija va tahlilni o'z ichiga oladi."},
+ {q:"Ikki tajriba natijasini taqqoslash uchun qaysi biri qulay?",ok:"Bitta grafikda ikkita chiziq chizish",no:["Natijalarni yozmaslik","Faqat eslab qolish","Bittasini tashlab yuborish"],why:"Bitta grafikda farq bir qarashda ko'rinadi."}]);
+initTest();
+go(1,true);
+})();
+</script>
+</body>
+</html>
